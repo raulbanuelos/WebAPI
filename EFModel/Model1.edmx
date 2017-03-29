@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PixieLocationBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CAT_CATEGORIA">
+          <Key>
+            <PropertyRef Name="ID_CATEGORIA" />
+          </Key>
+          <Property Name="ID_CATEGORIA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="ID_USUARIO_CREACION" Type="int" Nullable="false" />
+          <Property Name="FECHA_ACTUALIZACION" Type="datetime" Nullable="false" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="int" Nullable="false" />
+          <Property Name="TIPO_ICONO" Type="int" />
+        </EntityType>
+        <EntityType Name="CAT_NEGOCIO">
+          <Key>
+            <PropertyRef Name="ID_NEGOCIO" />
+          </Key>
+          <Property Name="ID_NEGOCIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LATITUD" Type="float" />
+          <Property Name="LONGITUD" Type="float" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="50" />
+          <Property Name="HORARIOS" Type="varchar" MaxLength="50" />
+          <Property Name="FECHA_CREACION" Type="datetime" />
+          <Property Name="ID_USUARIO_CREACION" Type="int" />
+          <Property Name="FECHA_ACTUALIZACION" Type="datetime" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="int" />
+          <Property Name="ESTATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="CAT_SUB_CATEGORIA">
+          <Key>
+            <PropertyRef Name="ID_SUB_CATEGORIA" />
+          </Key>
+          <Property Name="ID_SUB_CATEGORIA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_CATEGORIA" Type="int" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="datetime" Nullable="false" />
+          <Property Name="ID_USUARIO_CREACION" Type="int" Nullable="false" />
+          <Property Name="FECHA_ACTUALIZACION" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_USUARIO_APLICACION">
+          <Key>
+            <PropertyRef Name="ID_USUARIO_APLICACION" />
+          </Key>
+          <Property Name="ID_USUARIO_APLICACION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CORREO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CONTRASENA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FECHA_INGRESO" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PEDIDOS">
+          <Key>
+            <PropertyRef Name="ID_PEDIDO" />
+          </Key>
+          <Property Name="ID_PEDIDO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USUARIO_APLICACION" Type="int" Nullable="false" />
+          <Property Name="FECHA_PEDIDO" Type="datetime" Nullable="false" />
+          <Property Name="ESTATUS" Type="int" Nullable="false" />
+          <Property Name="ID_NEGOCIO_ASIGNADO" Type="int" />
+          <Property Name="LATITUD_INICIAL" Type="float" Nullable="false" />
+          <Property Name="LONGITUD_INICIAL" Type="float" Nullable="false" />
+          <Property Name="LATITUD_DESTINO" Type="float" />
+          <Property Name="LONGITUD_DESTINO" Type="float" />
+          <Property Name="FECHA_FINAL" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBL_CALIFICACION_NEGOCIO">
+          <Key>
+            <PropertyRef Name="ID_CALIFICACION" />
+          </Key>
+          <Property Name="ID_CALIFICACION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_NEGOCIO" Type="int" />
+          <Property Name="CALIFICACION" Type="float" />
+          <Property Name="COMETARIOS" Type="varchar" MaxLength="50" />
+          <Property Name="FECHA" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBL_RELACIION">
+          <Key>
+            <PropertyRef Name="ID_RELACIION" />
+          </Key>
+          <Property Name="ID_RELACIION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_SUB_CATEGORIA" Type="int" />
+          <Property Name="ID_NEGOCIO" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO">
+          <Key>
+            <PropertyRef Name="ID_USUARIO" />
+          </Key>
+          <Property Name="ID_USUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USUARIO" Type="varchar" MaxLength="50" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="FECHA_CREACION" Type="datetime" />
+          <Property Name="ID_USUARIO_CREACION" Type="int" />
+          <Property Name="FECHA_ACTUALIZACION" Type="datetime" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="int" />
+        </EntityType>
+        <EntityType Name="TR_USUARIO_NEGOCIO">
+          <Key>
+            <PropertyRef Name="ID_USUARIO_NEGOCIO" />
+          </Key>
+          <Property Name="ID_USUARIO_NEGOCIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USUARIO" Type="int" />
+          <Property Name="ID_NEGOCIO" Type="int" />
+          <Property Name="FECHA_CREACION" Type="datetime" />
+          <Property Name="ID_USUARIO_CREACION" Type="int" />
+          <Property Name="FECHA_ACTUALIZACION" Type="datetime" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="int" />
+        </EntityType>
+        <Association Name="FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA">
+          <End Role="CAT_CATEGORIA" Type="Self.CAT_CATEGORIA" Multiplicity="1" />
+          <End Role="CAT_SUB_CATEGORIA" Type="Self.CAT_SUB_CATEGORIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_CATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Principal>
+            <Dependent Role="CAT_SUB_CATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PEDIDOS_CAT_NEGOCIO">
+          <End Role="CAT_NEGOCIO" Type="Self.CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Role="PEDIDOS" Type="Self.PEDIDOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="PEDIDOS">
+              <PropertyRef Name="ID_NEGOCIO_ASIGNADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PEDIDOS_CAT_USUARIO_APLICACION">
+          <End Role="CAT_USUARIO_APLICACION" Type="Self.CAT_USUARIO_APLICACION" Multiplicity="1" />
+          <End Role="PEDIDOS" Type="Self.PEDIDOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_USUARIO_APLICACION">
+              <PropertyRef Name="ID_USUARIO_APLICACION" />
+            </Principal>
+            <Dependent Role="PEDIDOS">
+              <PropertyRef Name="ID_USUARIO_APLICACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO">
+          <End Role="CAT_NEGOCIO" Type="Self.CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Role="TBL_CALIFICACION_NEGOCIO" Type="Self.TBL_CALIFICACION_NEGOCIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="TBL_CALIFICACION_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_RELACIION_CAT_NEGOCIO">
+          <End Role="CAT_NEGOCIO" Type="Self.CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Role="TBL_RELACIION" Type="Self.TBL_RELACIION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="TBL_RELACIION">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_RELACIION_CAT_SUB_CATEGORIA">
+          <End Role="CAT_SUB_CATEGORIA" Type="Self.CAT_SUB_CATEGORIA" Multiplicity="1" />
+          <End Role="TBL_RELACIION" Type="Self.TBL_RELACIION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_SUB_CATEGORIA">
+              <PropertyRef Name="ID_SUB_CATEGORIA" />
+            </Principal>
+            <Dependent Role="TBL_RELACIION">
+              <PropertyRef Name="ID_RELACIION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO">
+          <End Role="CAT_NEGOCIO" Type="Self.CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Role="TR_USUARIO_NEGOCIO" Type="Self.TR_USUARIO_NEGOCIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="TR_USUARIO_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TR_USUARIO_NEGOCIO_TBL_USUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="0..1" />
+          <End Role="TR_USUARIO_NEGOCIO" Type="Self.TR_USUARIO_NEGOCIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="TR_USUARIO_NEGOCIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PixieLocationBDModelStoreContainer">
+          <EntitySet Name="CAT_CATEGORIA" EntityType="Self.CAT_CATEGORIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_NEGOCIO" EntityType="Self.CAT_NEGOCIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_SUB_CATEGORIA" EntityType="Self.CAT_SUB_CATEGORIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_USUARIO_APLICACION" EntityType="Self.CAT_USUARIO_APLICACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PEDIDOS" EntityType="Self.PEDIDOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_CALIFICACION_NEGOCIO" EntityType="Self.TBL_CALIFICACION_NEGOCIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_RELACIION" EntityType="Self.TBL_RELACIION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_USUARIO" EntityType="Self.TBL_USUARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TR_USUARIO_NEGOCIO" EntityType="Self.TR_USUARIO_NEGOCIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA" Association="Self.FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA">
+            <End Role="CAT_CATEGORIA" EntitySet="CAT_CATEGORIA" />
+            <End Role="CAT_SUB_CATEGORIA" EntitySet="CAT_SUB_CATEGORIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PEDIDOS_CAT_NEGOCIO" Association="Self.FK_PEDIDOS_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PEDIDOS_CAT_USUARIO_APLICACION" Association="Self.FK_PEDIDOS_CAT_USUARIO_APLICACION">
+            <End Role="CAT_USUARIO_APLICACION" EntitySet="CAT_USUARIO_APLICACION" />
+            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO" Association="Self.FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="TBL_CALIFICACION_NEGOCIO" EntitySet="TBL_CALIFICACION_NEGOCIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_RELACIION_CAT_NEGOCIO" Association="Self.FK_TBL_RELACIION_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="TBL_RELACIION" EntitySet="TBL_RELACIION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_RELACIION_CAT_SUB_CATEGORIA" Association="Self.FK_TBL_RELACIION_CAT_SUB_CATEGORIA">
+            <End Role="CAT_SUB_CATEGORIA" EntitySet="CAT_SUB_CATEGORIA" />
+            <End Role="TBL_RELACIION" EntitySet="TBL_RELACIION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO" Association="Self.FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="TR_USUARIO_NEGOCIO" EntitySet="TR_USUARIO_NEGOCIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TR_USUARIO_NEGOCIO_TBL_USUARIO" Association="Self.FK_TR_USUARIO_NEGOCIO_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TR_USUARIO_NEGOCIO" EntitySet="TR_USUARIO_NEGOCIO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PixieLocationBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CAT_CATEGORIA">
+          <Key>
+            <PropertyRef Name="ID_CATEGORIA" />
+          </Key>
+          <Property Name="ID_CATEGORIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_USUARIO_CREACION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_ACTUALIZACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="Int32" Nullable="false" />
+          <Property Name="TIPO_ICONO" Type="Int32" />
+          <NavigationProperty Name="CAT_SUB_CATEGORIA" Relationship="Self.FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA" FromRole="CAT_CATEGORIA" ToRole="CAT_SUB_CATEGORIA" />
+        </EntityType>
+        <EntityType Name="CAT_SUB_CATEGORIA">
+          <Key>
+            <PropertyRef Name="ID_SUB_CATEGORIA" />
+          </Key>
+          <Property Name="ID_SUB_CATEGORIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CATEGORIA" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_USUARIO_CREACION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_ACTUALIZACION" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CAT_CATEGORIA" Relationship="Self.FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA" FromRole="CAT_SUB_CATEGORIA" ToRole="CAT_CATEGORIA" />
+          <NavigationProperty Name="TBL_RELACIION" Relationship="Self.FK_TBL_RELACIION_CAT_SUB_CATEGORIA" FromRole="CAT_SUB_CATEGORIA" ToRole="TBL_RELACIION" />
+        </EntityType>
+        <EntityType Name="TBL_CALIFICACION_NEGOCIO">
+          <Key>
+            <PropertyRef Name="ID_CALIFICACION" />
+          </Key>
+          <Property Name="ID_CALIFICACION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_NEGOCIO" Type="Int32" />
+          <Property Name="CALIFICACION" Type="Double" />
+          <Property Name="COMETARIOS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CAT_NEGOCIO" Relationship="PixieLocationBDModel.FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO" FromRole="TBL_CALIFICACION_NEGOCIO" ToRole="CAT_NEGOCIO" />
+        </EntityType>
+        <EntityType Name="TBL_RELACIION">
+          <Key>
+            <PropertyRef Name="ID_RELACIION" />
+          </Key>
+          <Property Name="ID_RELACIION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_SUB_CATEGORIA" Type="Int32" />
+          <Property Name="ID_NEGOCIO" Type="Int32" />
+          <NavigationProperty Name="CAT_SUB_CATEGORIA" Relationship="Self.FK_TBL_RELACIION_CAT_SUB_CATEGORIA" FromRole="TBL_RELACIION" ToRole="CAT_SUB_CATEGORIA" />
+          <NavigationProperty Name="CAT_NEGOCIO" Relationship="PixieLocationBDModel.FK_TBL_RELACIION_CAT_NEGOCIO" FromRole="TBL_RELACIION" ToRole="CAT_NEGOCIO" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO">
+          <Key>
+            <PropertyRef Name="ID_USUARIO" />
+          </Key>
+          <Property Name="ID_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USUARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Precision="3" />
+          <Property Name="ID_USUARIO_CREACION" Type="Int32" />
+          <Property Name="FECHA_ACTUALIZACION" Type="DateTime" Precision="3" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="Int32" />
+          <NavigationProperty Name="TR_USUARIO_NEGOCIO" Relationship="Self.FK_TR_USUARIO_NEGOCIO_TBL_USUARIO" FromRole="TBL_USUARIO" ToRole="TR_USUARIO_NEGOCIO" />
+        </EntityType>
+        <EntityType Name="TR_USUARIO_NEGOCIO">
+          <Key>
+            <PropertyRef Name="ID_USUARIO_NEGOCIO" />
+          </Key>
+          <Property Name="ID_USUARIO_NEGOCIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USUARIO" Type="Int32" />
+          <Property Name="ID_NEGOCIO" Type="Int32" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Precision="3" />
+          <Property Name="ID_USUARIO_CREACION" Type="Int32" />
+          <Property Name="FECHA_ACTUALIZACION" Type="DateTime" Precision="3" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="Int32" />
+          <NavigationProperty Name="TBL_USUARIO" Relationship="Self.FK_TR_USUARIO_NEGOCIO_TBL_USUARIO" FromRole="TR_USUARIO_NEGOCIO" ToRole="TBL_USUARIO" />
+          <NavigationProperty Name="CAT_NEGOCIO" Relationship="PixieLocationBDModel.FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO" FromRole="TR_USUARIO_NEGOCIO" ToRole="CAT_NEGOCIO" />
+        </EntityType>
+        <Association Name="FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA">
+          <End Role="CAT_CATEGORIA" Type="Self.CAT_CATEGORIA" Multiplicity="1" />
+          <End Role="CAT_SUB_CATEGORIA" Type="Self.CAT_SUB_CATEGORIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_CATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Principal>
+            <Dependent Role="CAT_SUB_CATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_RELACIION_CAT_SUB_CATEGORIA">
+          <End Role="CAT_SUB_CATEGORIA" Type="Self.CAT_SUB_CATEGORIA" Multiplicity="1" />
+          <End Role="TBL_RELACIION" Type="Self.TBL_RELACIION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_SUB_CATEGORIA">
+              <PropertyRef Name="ID_SUB_CATEGORIA" />
+            </Principal>
+            <Dependent Role="TBL_RELACIION">
+              <PropertyRef Name="ID_RELACIION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TR_USUARIO_NEGOCIO_TBL_USUARIO">
+          <End Role="TBL_USUARIO" Type="Self.TBL_USUARIO" Multiplicity="0..1" />
+          <End Role="TR_USUARIO_NEGOCIO" Type="Self.TR_USUARIO_NEGOCIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USUARIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Principal>
+            <Dependent Role="TR_USUARIO_NEGOCIO">
+              <PropertyRef Name="ID_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CAT_CATEGORIA" EntityType="Self.CAT_CATEGORIA" />
+          <EntitySet Name="CAT_SUB_CATEGORIA" EntityType="Self.CAT_SUB_CATEGORIA" />
+          <EntitySet Name="TBL_CALIFICACION_NEGOCIO" EntityType="Self.TBL_CALIFICACION_NEGOCIO" />
+          <EntitySet Name="TBL_RELACIION" EntityType="Self.TBL_RELACIION" />
+          <EntitySet Name="TBL_USUARIO" EntityType="Self.TBL_USUARIO" />
+          <EntitySet Name="TR_USUARIO_NEGOCIO" EntityType="Self.TR_USUARIO_NEGOCIO" />
+          <AssociationSet Name="FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA" Association="Self.FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA">
+            <End Role="CAT_CATEGORIA" EntitySet="CAT_CATEGORIA" />
+            <End Role="CAT_SUB_CATEGORIA" EntitySet="CAT_SUB_CATEGORIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_RELACIION_CAT_SUB_CATEGORIA" Association="Self.FK_TBL_RELACIION_CAT_SUB_CATEGORIA">
+            <End Role="CAT_SUB_CATEGORIA" EntitySet="CAT_SUB_CATEGORIA" />
+            <End Role="TBL_RELACIION" EntitySet="TBL_RELACIION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TR_USUARIO_NEGOCIO_TBL_USUARIO" Association="Self.FK_TR_USUARIO_NEGOCIO_TBL_USUARIO">
+            <End Role="TBL_USUARIO" EntitySet="TBL_USUARIO" />
+            <End Role="TR_USUARIO_NEGOCIO" EntitySet="TR_USUARIO_NEGOCIO" />
+          </AssociationSet>
+          <EntitySet Name="CAT_USUARIO_APLICACION" EntityType="PixieLocationBDModel.CAT_USUARIO_APLICACION" />
+          <EntitySet Name="PEDIDOS" EntityType="PixieLocationBDModel.PEDIDOS" />
+          <AssociationSet Name="FK_PEDIDOS_CAT_USUARIO_APLICACION" Association="PixieLocationBDModel.FK_PEDIDOS_CAT_USUARIO_APLICACION">
+            <End Role="CAT_USUARIO_APLICACION" EntitySet="CAT_USUARIO_APLICACION" />
+            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
+          </AssociationSet>
+          <EntitySet Name="CAT_NEGOCIO" EntityType="PixieLocationBDModel.CAT_NEGOCIO" />
+          <AssociationSet Name="FK_PEDIDOS_CAT_NEGOCIO" Association="PixieLocationBDModel.FK_PEDIDOS_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="PEDIDOS" EntitySet="PEDIDOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO" Association="PixieLocationBDModel.FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="TBL_CALIFICACION_NEGOCIO" EntitySet="TBL_CALIFICACION_NEGOCIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_RELACIION_CAT_NEGOCIO" Association="PixieLocationBDModel.FK_TBL_RELACIION_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="TBL_RELACIION" EntitySet="TBL_RELACIION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO" Association="PixieLocationBDModel.FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO">
+            <End Role="CAT_NEGOCIO" EntitySet="CAT_NEGOCIO" />
+            <End Role="TR_USUARIO_NEGOCIO" EntitySet="TR_USUARIO_NEGOCIO" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="CAT_USUARIO_APLICACION">
+          <Key>
+            <PropertyRef Name="ID_USUARIO_APLICACION" />
+          </Key>
+          <Property Name="ID_USUARIO_APLICACION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CORREO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRASENA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_INGRESO" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PEDIDOS" Relationship="PixieLocationBDModel.FK_PEDIDOS_CAT_USUARIO_APLICACION" FromRole="CAT_USUARIO_APLICACION" ToRole="PEDIDOS" />
+        </EntityType>
+        <EntityType Name="PEDIDOS">
+          <Key>
+            <PropertyRef Name="ID_PEDIDO" />
+          </Key>
+          <Property Name="ID_PEDIDO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USUARIO_APLICACION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_PEDIDO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ESTATUS" Type="Int32" Nullable="false" />
+          <Property Name="ID_NEGOCIO_ASIGNADO" Type="Int32" />
+          <Property Name="LATITUD_INICIAL" Type="Double" Nullable="false" />
+          <Property Name="LONGITUD_INICIAL" Type="Double" Nullable="false" />
+          <Property Name="LATITUD_DESTINO" Type="Double" />
+          <Property Name="LONGITUD_DESTINO" Type="Double" />
+          <Property Name="FECHA_FINAL" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CAT_USUARIO_APLICACION" Relationship="PixieLocationBDModel.FK_PEDIDOS_CAT_USUARIO_APLICACION" FromRole="PEDIDOS" ToRole="CAT_USUARIO_APLICACION" />
+          <NavigationProperty Name="CAT_NEGOCIO" Relationship="PixieLocationBDModel.FK_PEDIDOS_CAT_NEGOCIO" FromRole="PEDIDOS" ToRole="CAT_NEGOCIO" />
+        </EntityType>
+        <Association Name="FK_PEDIDOS_CAT_USUARIO_APLICACION">
+          <End Type="PixieLocationBDModel.CAT_USUARIO_APLICACION" Role="CAT_USUARIO_APLICACION" Multiplicity="1" />
+          <End Type="PixieLocationBDModel.PEDIDOS" Role="PEDIDOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_USUARIO_APLICACION">
+              <PropertyRef Name="ID_USUARIO_APLICACION" />
+            </Principal>
+            <Dependent Role="PEDIDOS">
+              <PropertyRef Name="ID_USUARIO_APLICACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CAT_NEGOCIO">
+          <Key>
+            <PropertyRef Name="ID_NEGOCIO" />
+          </Key>
+          <Property Name="ID_NEGOCIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LATITUD" Type="Double" />
+          <Property Name="LONGITUD" Type="Double" />
+          <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HORARIOS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Precision="3" />
+          <Property Name="ID_USUARIO_CREACION" Type="Int32" />
+          <Property Name="FECHA_ACTUALIZACION" Type="DateTime" Precision="3" />
+          <Property Name="ID_USUARIO_ACTUALIZACION" Type="Int32" />
+          <Property Name="ESTATUS" Type="Int32" />
+          <NavigationProperty Name="PEDIDOS" Relationship="PixieLocationBDModel.FK_PEDIDOS_CAT_NEGOCIO" FromRole="CAT_NEGOCIO" ToRole="PEDIDOS" />
+          <NavigationProperty Name="TBL_CALIFICACION_NEGOCIO" Relationship="PixieLocationBDModel.FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO" FromRole="CAT_NEGOCIO" ToRole="TBL_CALIFICACION_NEGOCIO" />
+          <NavigationProperty Name="TBL_RELACIION" Relationship="PixieLocationBDModel.FK_TBL_RELACIION_CAT_NEGOCIO" FromRole="CAT_NEGOCIO" ToRole="TBL_RELACIION" />
+          <NavigationProperty Name="TR_USUARIO_NEGOCIO" Relationship="PixieLocationBDModel.FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO" FromRole="CAT_NEGOCIO" ToRole="TR_USUARIO_NEGOCIO" />
+        </EntityType>
+        <Association Name="FK_PEDIDOS_CAT_NEGOCIO">
+          <End Type="PixieLocationBDModel.CAT_NEGOCIO" Role="CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Type="PixieLocationBDModel.PEDIDOS" Role="PEDIDOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="PEDIDOS">
+              <PropertyRef Name="ID_NEGOCIO_ASIGNADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO">
+          <End Type="PixieLocationBDModel.CAT_NEGOCIO" Role="CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Type="PixieLocationBDModel.TBL_CALIFICACION_NEGOCIO" Role="TBL_CALIFICACION_NEGOCIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="TBL_CALIFICACION_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_RELACIION_CAT_NEGOCIO">
+          <End Type="PixieLocationBDModel.CAT_NEGOCIO" Role="CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Type="PixieLocationBDModel.TBL_RELACIION" Role="TBL_RELACIION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="TBL_RELACIION">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO">
+          <End Type="PixieLocationBDModel.CAT_NEGOCIO" Role="CAT_NEGOCIO" Multiplicity="0..1" />
+          <End Type="PixieLocationBDModel.TR_USUARIO_NEGOCIO" Role="TR_USUARIO_NEGOCIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Principal>
+            <Dependent Role="TR_USUARIO_NEGOCIO">
+              <PropertyRef Name="ID_NEGOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PixieLocationBDModelStoreContainer" CdmEntityContainer="BDEntities">
+          <EntitySetMapping Name="CAT_CATEGORIA">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.CAT_CATEGORIA">
+              <MappingFragment StoreEntitySet="CAT_CATEGORIA">
+                <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="ID_USUARIO_CREACION" ColumnName="ID_USUARIO_CREACION" />
+                <ScalarProperty Name="FECHA_ACTUALIZACION" ColumnName="FECHA_ACTUALIZACION" />
+                <ScalarProperty Name="ID_USUARIO_ACTUALIZACION" ColumnName="ID_USUARIO_ACTUALIZACION" />
+                <ScalarProperty Name="TIPO_ICONO" ColumnName="TIPO_ICONO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_SUB_CATEGORIA">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.CAT_SUB_CATEGORIA">
+              <MappingFragment StoreEntitySet="CAT_SUB_CATEGORIA">
+                <ScalarProperty Name="ID_SUB_CATEGORIA" ColumnName="ID_SUB_CATEGORIA" />
+                <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="ID_USUARIO_CREACION" ColumnName="ID_USUARIO_CREACION" />
+                <ScalarProperty Name="FECHA_ACTUALIZACION" ColumnName="FECHA_ACTUALIZACION" />
+                <ScalarProperty Name="ID_USUARIO_ACTUALIZACION" ColumnName="ID_USUARIO_ACTUALIZACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_CALIFICACION_NEGOCIO">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.TBL_CALIFICACION_NEGOCIO">
+              <MappingFragment StoreEntitySet="TBL_CALIFICACION_NEGOCIO">
+                <ScalarProperty Name="ID_CALIFICACION" ColumnName="ID_CALIFICACION" />
+                <ScalarProperty Name="ID_NEGOCIO" ColumnName="ID_NEGOCIO" />
+                <ScalarProperty Name="CALIFICACION" ColumnName="CALIFICACION" />
+                <ScalarProperty Name="COMETARIOS" ColumnName="COMETARIOS" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_RELACIION">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.TBL_RELACIION">
+              <MappingFragment StoreEntitySet="TBL_RELACIION">
+                <ScalarProperty Name="ID_RELACIION" ColumnName="ID_RELACIION" />
+                <ScalarProperty Name="ID_SUB_CATEGORIA" ColumnName="ID_SUB_CATEGORIA" />
+                <ScalarProperty Name="ID_NEGOCIO" ColumnName="ID_NEGOCIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_USUARIO">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.TBL_USUARIO">
+              <MappingFragment StoreEntitySet="TBL_USUARIO">
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="ID_USUARIO_CREACION" ColumnName="ID_USUARIO_CREACION" />
+                <ScalarProperty Name="FECHA_ACTUALIZACION" ColumnName="FECHA_ACTUALIZACION" />
+                <ScalarProperty Name="ID_USUARIO_ACTUALIZACION" ColumnName="ID_USUARIO_ACTUALIZACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TR_USUARIO_NEGOCIO">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.TR_USUARIO_NEGOCIO">
+              <MappingFragment StoreEntitySet="TR_USUARIO_NEGOCIO">
+                <ScalarProperty Name="ID_USUARIO_NEGOCIO" ColumnName="ID_USUARIO_NEGOCIO" />
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="ID_NEGOCIO" ColumnName="ID_NEGOCIO" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="ID_USUARIO_CREACION" ColumnName="ID_USUARIO_CREACION" />
+                <ScalarProperty Name="FECHA_ACTUALIZACION" ColumnName="FECHA_ACTUALIZACION" />
+                <ScalarProperty Name="ID_USUARIO_ACTUALIZACION" ColumnName="ID_USUARIO_ACTUALIZACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_USUARIO_APLICACION">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.CAT_USUARIO_APLICACION">
+              <MappingFragment StoreEntitySet="CAT_USUARIO_APLICACION">
+                <ScalarProperty Name="FECHA_INGRESO" ColumnName="FECHA_INGRESO" />
+                <ScalarProperty Name="CONTRASENA" ColumnName="CONTRASENA" />
+                <ScalarProperty Name="CORREO" ColumnName="CORREO" />
+                <ScalarProperty Name="ID_USUARIO_APLICACION" ColumnName="ID_USUARIO_APLICACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PEDIDOS">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.PEDIDOS">
+              <MappingFragment StoreEntitySet="PEDIDOS">
+                <ScalarProperty Name="FECHA_FINAL" ColumnName="FECHA_FINAL" />
+                <ScalarProperty Name="LONGITUD_DESTINO" ColumnName="LONGITUD_DESTINO" />
+                <ScalarProperty Name="LATITUD_DESTINO" ColumnName="LATITUD_DESTINO" />
+                <ScalarProperty Name="LONGITUD_INICIAL" ColumnName="LONGITUD_INICIAL" />
+                <ScalarProperty Name="LATITUD_INICIAL" ColumnName="LATITUD_INICIAL" />
+                <ScalarProperty Name="ID_NEGOCIO_ASIGNADO" ColumnName="ID_NEGOCIO_ASIGNADO" />
+                <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+                <ScalarProperty Name="FECHA_PEDIDO" ColumnName="FECHA_PEDIDO" />
+                <ScalarProperty Name="ID_USUARIO_APLICACION" ColumnName="ID_USUARIO_APLICACION" />
+                <ScalarProperty Name="ID_PEDIDO" ColumnName="ID_PEDIDO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_NEGOCIO">
+            <EntityTypeMapping TypeName="PixieLocationBDModel.CAT_NEGOCIO">
+              <MappingFragment StoreEntitySet="CAT_NEGOCIO">
+                <ScalarProperty Name="ESTATUS" ColumnName="ESTATUS" />
+                <ScalarProperty Name="ID_USUARIO_ACTUALIZACION" ColumnName="ID_USUARIO_ACTUALIZACION" />
+                <ScalarProperty Name="FECHA_ACTUALIZACION" ColumnName="FECHA_ACTUALIZACION" />
+                <ScalarProperty Name="ID_USUARIO_CREACION" ColumnName="ID_USUARIO_CREACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="HORARIOS" ColumnName="HORARIOS" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+                <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+                <ScalarProperty Name="ID_NEGOCIO" ColumnName="ID_NEGOCIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="a38c92bbba104ac7ac711acc6e5ae30a" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="PixieLocationBDModel.CAT_CATEGORIA" Width="2.375" PointX="1.375" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.CAT_SUB_CATEGORIA" Width="2.375" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.TBL_CALIFICACION_NEGOCIO" Width="2.625" PointX="4.625" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.TBL_RELACIION" Width="2.125" PointX="4.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.TBL_USUARIO" Width="2.25" PointX="7.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.TR_USUARIO_NEGOCIO" Width="2.5" PointX="9.25" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_CAT_SUB_CATEGORIA_CAT_CATEGORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_TBL_RELACIION_CAT_SUB_CATEGORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_TR_USUARIO_NEGOCIO_TBL_USUARIO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.CAT_USUARIO_APLICACION" Width="1.5" PointX="10" PointY="13.375" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.PEDIDOS" Width="1.5" PointX="13.25" PointY="6.625" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_PEDIDOS_CAT_USUARIO_APLICACION" />
+        <EntityTypeShape EntityType="PixieLocationBDModel.CAT_NEGOCIO" Width="1.5" PointX="11" PointY="1" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_PEDIDOS_CAT_NEGOCIO" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_TBL_CALIFICACION_NEGOCIO_CAT_NEGOCIO" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_TBL_RELACIION_CAT_NEGOCIO" />
+        <AssociationConnector Association="PixieLocationBDModel.FK_TR_USUARIO_NEGOCIO_CAT_NEGOCIO" />
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

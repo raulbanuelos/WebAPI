@@ -36,8 +36,11 @@ namespace EFModel.ServiceObject
             }
         }
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objNegocio"></param>
+        /// <returns></returns>
         public string SetNegocios(CAT_NEGOCIO objNegocio)
         {
             try
@@ -57,6 +60,11 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
         public IList GetNegociosRelacionados(int idCategoria)
         {
             try {
@@ -84,6 +92,10 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IList GetNegociosOcupados()
         {
             try
@@ -112,6 +124,11 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         public PEDIDOS GetNegocioPedido(int idNegocio)
         {
             try
@@ -151,6 +168,13 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="latitud"></param>
+        /// <param name="longitud"></param>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         public string SetPositionNegocio(double latitud, double longitud, int idNegocio)
         {
             string r = string.Empty;
@@ -181,6 +205,13 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="calificacion"></param>
+        /// <param name="idNegocio"></param>
+        /// <param name="comentarios"></param>
+        /// <returns></returns>
         public string SetCalificacion(double calificacion, int idNegocio, string comentarios)
         {
             try

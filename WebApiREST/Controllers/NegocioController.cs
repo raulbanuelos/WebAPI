@@ -22,8 +22,9 @@ namespace WebApiREST.Controllers
             return DataManager.GetAllNegocio();
         }
 
-        [Route("api/Negocio/{palabra}/{latitud:double}/{longitud:double}")]
-        public IHttpActionResult GetNegocio(int idCategoria,double latitud,double longitud)
+        [System.Web.Http.AcceptVerbs("POST")]
+        [Route("api/Negocio/{latitud:double}/{longitud:double}/{idCategoria:int}")]
+        public IHttpActionResult GetNegocio(double latitud,double longitud, int idCategoria)
         {
             return Ok(DataManager.GetNegociosRelacionados(idCategoria, latitud,longitud));
         }

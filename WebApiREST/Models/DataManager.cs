@@ -264,10 +264,10 @@ namespace WebApiREST.Models
         /// <param name="correo"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static int SetUsuarioAplicacion(string correo, string pass)
+        public static int SetUsuarioAplicacion(string correo, string pass,string usuario,string nombre,string aPaterno,string aMaterno,DateTime fechaNacimiento,string movil)
         {
             SO_Usuario_Aplicacion ServicioUsuario = new SO_Usuario_Aplicacion();
-            return ServicioUsuario.SetUsuarioAplicacion(correo, pass);
+            return ServicioUsuario.SetUsuarioAplicacion(correo, pass,usuario,nombre,aPaterno,aMaterno,fechaNacimiento,movil);
         }
 
         public static Negocio GetAuto(double longitudInicial, double latitudInicial,double longitudDestino,double latitudDestino, int idUsuarioAplicacion)

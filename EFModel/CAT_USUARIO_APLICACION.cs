@@ -24,6 +24,14 @@ namespace EFModel
         public string CORREO { get; set; }
         public string CONTRASENA { get; set; }
         public System.DateTime FECHA_INGRESO { get; set; }
+        public string USUARIO { get; set; }
+        public string NOMBRE { get; set; }
+        public string APELLIDO_PATERNO { get; set; }
+        public string APELLIDO_MATERNO { get; set; }
+        public Nullable<System.DateTime> FECHA_NACIMIENTO { get; set; }
+        public string MOVIL { get; set; }
+        public Nullable<bool> IS_ACTIVO { get; set; }
+        public string CODIGO_ACTIVACION { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDOS> PEDIDOS { get; set; }

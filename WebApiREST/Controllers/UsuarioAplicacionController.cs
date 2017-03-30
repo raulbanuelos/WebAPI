@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using WebApiREST.Models;
@@ -13,10 +14,11 @@ namespace WebApiREST.Controllers
         /// <param name="usuario"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        [Route("api/UsuarioAplicacion")]
-        public IHttpActionResult SetUsuarioAplicacion(string usuario, string pass)
+        [AcceptVerbs("GET")]
+        [Route("api/UsuarioAplicacion/{correo}/{pass}/{usuario}/{nombre}/{aPaterno}/{aMaterno}/{movil}/{fechaNacimiento}")]
+        public IHttpActionResult SetUsuarioAplicacion(string correo, string pass,string usuario,string nombre,string aPaterno,string aMaterno, string movil,string fechaNacimiento)
         {
-            return Ok(DataManager.SetUsuarioAplicacion(usuario, pass));
+            return Ok(DataManager.SetUsuarioAplicacion(correo, pass,usuario,nombre,aPaterno,aMaterno,Convert.ToDateTime(fechaNacimiento),movil));
         }
 
         [Route("api/UsuarioAplicacion/{latitudInicial:double}/{longitudInicial:double}/{latitudDestino:double}/{longitudDestino:double}/{idUsuarioAplicacion:int}")]

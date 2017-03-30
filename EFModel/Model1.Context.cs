@@ -31,8 +31,8 @@ namespace EFModel
         public virtual DbSet<TBL_RELACIION> TBL_RELACIION { get; set; }
         public virtual DbSet<TBL_USUARIO> TBL_USUARIO { get; set; }
         public virtual DbSet<TR_USUARIO_NEGOCIO> TR_USUARIO_NEGOCIO { get; set; }
-        public virtual DbSet<CAT_USUARIO_APLICACION> CAT_USUARIO_APLICACION { get; set; }
         public virtual DbSet<PEDIDOS> PEDIDOS { get; set; }
         public virtual DbSet<CAT_NEGOCIO> CAT_NEGOCIO { get; set; }
+        public virtual DbSet<CAT_USUARIO_APLICACION> CAT_USUARIO_APLICACION { get; set; }
     }
 }

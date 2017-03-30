@@ -22,6 +22,7 @@ namespace EFModel.ServiceObject
                 var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
                                      join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
                                      join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
+                                     where negocio.IS_ACTIVO == true
                                      select new
                                      {
                                          negocio.LATITUD,
@@ -65,7 +66,7 @@ namespace EFModel.ServiceObject
         /// </summary>
         /// <param name="idCategoria"></param>
         /// <returns></returns>
-        public IList GetNegociosRelacionados(int idCategoria)
+        public IList GetNegociosRelacionados(string palabra)
         {
             try {
                 using (var Conexion = new BDEntities())
@@ -73,7 +74,7 @@ namespace EFModel.ServiceObject
                     var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
                                          join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
                                          join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
-                                         where subcategoria.ID_SUB_CATEGORIA == idCategoria
+                                         where subcategoria.NOMBRE.Contains(palabra) && negocio.IS_ACTIVO == true
                                          select new {
                                              negocio.LATITUD,
                                              negocio.LONGITUD,
@@ -104,7 +105,7 @@ namespace EFModel.ServiceObject
                 {
                     var lista = (from a in Conexion.CAT_NEGOCIO
                                  join b in Conexion.TBL_RELACIION on a.ID_NEGOCIO equals b.ID_NEGOCIO
-                                 where a.ESTATUS == 3
+                                 where a.ESTATUS == 3 && a.IS_ACTIVO == true
                                  select new {
                                      a.ID_NEGOCIO,
                                      a.LATITUD,

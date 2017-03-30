@@ -149,10 +149,10 @@ namespace WebApiREST.Models
         /// <param name="latitud_actual"></param>
         /// <param name="longitud_actual"></param>
         /// <returns></returns>
-        public static List<Negocio> GetNegociosRelacionados(int idCategoria, double latitud_actual, double longitud_actual)
+        public static List<Negocio> GetNegociosRelacionados(string palabra, double latitud_actual, double longitud_actual)
         {
             SO_Negocio SONegocio = new SO_Negocio();
-            IList listaResultante = SONegocio.GetNegociosRelacionados(idCategoria);
+            IList listaResultante = SONegocio.GetNegociosRelacionados(palabra);
             List<Negocio> listan = new List<Negocio>();
 
             if (listaResultante != null)

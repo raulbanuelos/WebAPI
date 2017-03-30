@@ -21,10 +21,10 @@ namespace WebApiREST.Controllers
         /// <param name="idCategoria"></param>
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("POST")]
-        [Route("api/Negocio/{latitud:double}/{longitud:double}/{idCategoria:int}")]
-        public IHttpActionResult GetNegocio(double latitud, double longitud, int idCategoria)
+        [Route("api/Negocio/{latitud:double}/{longitud:double}/{palabra}/{optional}")]
+        public IHttpActionResult GetNegocio(double latitud, double longitud,string palabra,string optional)
         {
-            return Ok(DataManager.GetNegociosRelacionados(idCategoria, latitud, longitud));
+            return Ok(DataManager.GetNegociosRelacionados(palabra, latitud, longitud));
         }
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace WebApiREST.Controllers
         /// <param name="a"></param>
         /// <returns></returns>
         [AcceptVerbs("POST")]
-        [Route("api/Negocio/{latitud:double}/{longitud:double}/{a}")]
-        public IHttpActionResult GetNegocios(double latitud, double longitud,string a)
+        [Route("api/Negocio/{latitud:double}/{longitud:double}/{optional}")]
+        public IHttpActionResult GetNegocios(double latitud, double longitud,string optional)
         {
             return Ok(DataManager.GetAllNegociosCercas(latitud, longitud));
         }

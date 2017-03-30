@@ -37,6 +37,8 @@ namespace WebApiREST.Models
             obj.ID_USUARIO_CREACION = 1;
             obj.FECHA_ACTUALIZACION = DateTime.Now;
             obj.ID_USUARIO_ACTUALIZACION = 1;
+            obj.CODIGO_ACTIVACION = "CODIGO";
+            obj.IS_ACTIVO = false;
             SO_Negocio SONegocio = new SO_Negocio();
 
             string r = SONegocio.SetNegocios(obj);
@@ -45,6 +47,45 @@ namespace WebApiREST.Models
             lista.Add(r);
 
             return lista;
+        }
+
+        /// <summary>
+        /// Método que se utiliza para obtener todos los negocios cercas de una ubicación.
+        /// </summary>
+        /// <param name="latitud_actual"></param>
+        /// <param name="longitud_actual"></param>
+        /// <returns></returns>
+        public static List<Negocio> GetAllNegociosCercas(double latitud_actual, double longitud_actual)
+        {
+            SO_Negocio ServicioNegocio = new SO_Negocio();
+            IList informacionBD = ServicioNegocio.GetAllNegocios();
+            List<Negocio> ListaResultante = new List<Negocio>();
+
+            if (informacionBD != null)
+            {
+                foreach (var negocio in informacionBD)
+                {
+                    System.Type tipo = negocio.GetType();
+
+                    double latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
+                    double longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
+                    double distancia = MedirDistancia(latitud_actual, latitud, longitud_actual, longitud);
+                    if (distancia <= 2) //distancia <= 1.5
+                    {
+                        Negocio obj = new Negocio();
+                        obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
+                        obj.Longitud = longitud;
+                        obj.idNegocio = Convert.ToInt32(tipo.GetProperty("ID_NEGOCIO").GetValue(negocio, null));
+                        obj.Descripcion = Convert.ToString(tipo.GetProperty("DESCRIPCION").GetValue(negocio, null));
+                        obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
+                        obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));
+                        obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
+                        ListaResultante.Add(obj);
+                    }
+                }
+            }
+
+            return ListaResultante;
         }
 
         /// <summary>
@@ -123,7 +164,7 @@ namespace WebApiREST.Models
                     double latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
                     double longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio,null));
                     double distancia = MedirDistancia(latitud_actual, latitud, longitud_actual, longitud);
-                    if (true) //distancia <= 1.5
+                    if (distancia <= 1.5) //distancia <= 1.5
                     {
                         Negocio obj = new Negocio();
                         obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio,null));
@@ -184,32 +225,6 @@ namespace WebApiREST.Models
         private static double GradosARadianes(double grados)
         {
             return (grados * Math.PI) / 180;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static Negocio[] GetAllNegocio()
-        {
-            SO_Negocio SONegocio = new SO_Negocio();
-            IList<CAT_NEGOCIO> listaResultante = SONegocio.GetAllNegocios();
-            Negocio[] lista = new Negocio[listaResultante.Count];
-            int c = 0;
-            foreach (CAT_NEGOCIO negocio in listaResultante)
-            {
-                lista[c] = new Negocio();
-                lista[c].Latitud = Convert.ToDouble(negocio.LATITUD);
-                lista[c].Longitud = Convert.ToDouble(negocio.LONGITUD);
-                lista[c].idNegocio = negocio.ID_NEGOCIO;
-                lista[c].Descripcion = negocio.DESCRIPCION;
-                lista[c].Titulo = negocio.NOMBRE;
-                lista[c].Horario = negocio.HORARIOS;
-
-                c += 1;
-            }
-            return lista;
-            
         }
 
         /// <summary>

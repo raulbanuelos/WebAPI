@@ -25,7 +25,7 @@ namespace EFModel
         public Nullable<double> LONGITUD_DESTINO { get; set; }
         public Nullable<System.DateTime> FECHA_FINAL { get; set; }
     
-        public virtual CAT_NEGOCIO CAT_NEGOCIO { get; set; }
         public virtual CAT_USUARIO_APLICACION CAT_USUARIO_APLICACION { get; set; }
+        public virtual CAT_NEGOCIO CAT_NEGOCIO { get; set; }
     }
 }

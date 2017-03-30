@@ -11,16 +11,32 @@ namespace EFModel.ServiceObject
 {
     public class SO_Negocio
     {
-
-        public IList<CAT_NEGOCIO> GetAllNegocios()
+        /// <summary>
+        /// Método que se utiliza para obtener todos los negocios.
+        /// </summary>
+        /// <returns></returns>
+        public IList GetAllNegocios()
         {
             using (var Conexion = new BDEntities())
             {
-                var lista = (from negocio in Conexion.CAT_NEGOCIO
-                             select negocio).ToList();
-                return lista;
+                var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
+                                     join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
+                                     join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
+                                     select new
+                                     {
+                                         negocio.LATITUD,
+                                         negocio.LONGITUD,
+                                         negocio.ID_NEGOCIO,
+                                         negocio.DESCRIPCION,
+                                         negocio.NOMBRE,
+                                         negocio.HORARIOS,
+                                         relacion.ID_SUB_CATEGORIA,
+                                     }).ToList();
+                return listaNegocios;
             }
         }
+
+
 
         public string SetNegocios(CAT_NEGOCIO objNegocio)
         {

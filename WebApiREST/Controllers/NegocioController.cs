@@ -11,31 +11,59 @@ namespace WebApiREST.Controllers
 {
     public class NegocioController : ApiController
     {
-        Negocio[] negocios = new Negocio[] {
-            new Negocio { Latitud = 21.870794,Longitud=-102.301992,Descripcion="Oficinas Pixie Lab",idNegocio=1},
-            new Negocio { Latitud = 21.871276,Longitud=-102.301816,Descripcion="La última luna",idNegocio=2},
-        };
+        
 
-        public IEnumerable<Negocio> GetAllNegocios()
-        {
-            //return negocios;
-            return DataManager.GetAllNegocio();
-        }
-
+        /// <summary>
+        /// Método que se utiliza para las busquedas de los negocios a partir de una categoria
+        /// </summary>
+        /// <param name="latitud"></param>
+        /// <param name="longitud"></param>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
         [System.Web.Http.AcceptVerbs("POST")]
         [Route("api/Negocio/{latitud:double}/{longitud:double}/{idCategoria:int}")]
-        public IHttpActionResult GetNegocio(double latitud,double longitud, int idCategoria)
+        public IHttpActionResult GetNegocio(double latitud, double longitud, int idCategoria)
         {
-            return Ok(DataManager.GetNegociosRelacionados(idCategoria, latitud,longitud));
+            return Ok(DataManager.GetNegociosRelacionados(idCategoria, latitud, longitud));
         }
 
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        /// <summary>
+        /// Método que se utiliza para obtener todos los negocios que estan cercas de una ubicación.
+        /// </summary>
+        /// <param name="latitud"></param>
+        /// <param name="longitud"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        [AcceptVerbs("POST")]
+        [Route("api/Negocio/{latitud:double}/{longitud:double}/{a}")]
+        public IHttpActionResult GetNegocios(double latitud, double longitud,string a)
+        {
+            return Ok(DataManager.GetAllNegociosCercas(latitud, longitud));
+        }
+
+        /// <summary>
+        /// Método que se utiliza para insertar un registro de negocio.
+        /// </summary>
+        /// <param name="latitud"></param>
+        /// <param name="longitud"></param>
+        /// <param name="nombre"></param>
+        /// <param name="descripcion"></param>
+        /// <param name="horarios"></param>
+        /// <returns></returns>
+        [System.Web.Http.AcceptVerbs("GET")]
         [Route("api/Negocio/{latitud:double}/{longitud:double}/{nombre}/{descripcion}/{horarios}")]
         public IHttpActionResult SetNegocio(double latitud,double longitud, string nombre,string descripcion, string horarios)
         {
             return Ok(DataManager.SetNegocio(latitud, longitud, nombre, descripcion, horarios));
         }
 
+        /// <summary>
+        /// Método que se utiliza para guardar una calificacion a un negocio.
+        /// </summary>
+        /// <param name="calificacion"></param>
+        /// <param name="comentarios"></param>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/Negocio/{calificacion:double}/{comentarios}/{idNegocio:int}")]
         public IHttpActionResult SetCalificacion(double calificacion, string comentarios, int idNegocio)

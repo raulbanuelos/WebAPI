@@ -29,6 +29,8 @@ namespace EFModel
         public string NOMBRE { get; set; }
         public string DESCRIPCION { get; set; }
         public string HORARIOS { get; set; }
+        public Nullable<bool> IS_ACTIVO { get; set; }
+        public string CODIGO_ACTIVACION { get; set; }
         public Nullable<System.DateTime> FECHA_CREACION { get; set; }
         public Nullable<int> ID_USUARIO_CREACION { get; set; }
         public Nullable<System.DateTime> FECHA_ACTUALIZACION { get; set; }

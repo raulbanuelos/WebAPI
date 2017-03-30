@@ -11,8 +11,6 @@ namespace WebApiREST.Controllers
 {
     public class NegocioController : ApiController
     {
-        
-
         /// <summary>
         /// Método que se utiliza para las busquedas de los negocios a partir de una categoria
         /// </summary>

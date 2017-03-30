@@ -11,71 +11,27 @@ namespace EFModel.ServiceObject
 {
     public class SO_Negocio
     {
+        #region Métodos
+
         /// <summary>
         /// Método que se utiliza para obtener todos los negocios.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lista anónima con la información de los negocios.Retorna un nulo si se generó algun error.</returns>
         public IList GetAllNegocios()
-        {
-            using (var Conexion = new BDEntities())
-            {
-                var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
-                                     join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
-                                     join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
-                                     where negocio.IS_ACTIVO == true
-                                     select new
-                                     {
-                                         negocio.LATITUD,
-                                         negocio.LONGITUD,
-                                         negocio.ID_NEGOCIO,
-                                         negocio.DESCRIPCION,
-                                         negocio.NOMBRE,
-                                         negocio.HORARIOS,
-                                         relacion.ID_SUB_CATEGORIA,
-                                     }).ToList();
-                return listaNegocios;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="objNegocio"></param>
-        /// <returns></returns>
-        public string SetNegocios(CAT_NEGOCIO objNegocio)
         {
             try
             {
+                //Realizamos la conexión a través de Entity Framework.
                 using (var Conexion = new BDEntities())
                 {
-                    Conexion.CAT_NEGOCIO.Add(objNegocio);
-                    int r = Conexion.SaveChanges();
 
-                    return r > 0 ? "S" : "N";
-                    
-                }
-            }
-            catch (Exception)
-            {
-                return "N";
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="idCategoria"></param>
-        /// <returns></returns>
-        public IList GetNegociosRelacionados(string palabra)
-        {
-            try {
-                using (var Conexion = new BDEntities())
-                {
+                    //Realizamos la consulta.
                     var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
                                          join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
                                          join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
-                                         where subcategoria.NOMBRE.Contains(palabra) && negocio.IS_ACTIVO == true
-                                         select new {
+                                         where negocio.IS_ACTIVO == true
+                                         select new
+                                         {
                                              negocio.LATITUD,
                                              negocio.LONGITUD,
                                              negocio.ID_NEGOCIO,
@@ -84,29 +40,103 @@ namespace EFModel.ServiceObject
                                              negocio.HORARIOS,
                                              relacion.ID_SUB_CATEGORIA,
                                          }).ToList();
+
+                    //Retornamos el resultado de la consulta.
                     return listaNegocios;
                 }
             }
             catch (Exception)
             {
+                //Si se generó algún error retornamos un nulo.
                 return null;
             }
         }
 
         /// <summary>
-        /// 
+        /// Método que agrega un objeto de tipo Negocio a la tabla de negocios.
+        /// </summary>
+        /// <param name="objNegocio">Objeto que representa el negocio que se requiere insertar.</param>
+        /// <returns>Retorna un S si se guardo correctamente. Retorna una N si se generó algún error.</returns>
+        public string SetNegocios(CAT_NEGOCIO objNegocio)
+        {
+            try
+            {
+                //Realizamos la conexión a través de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Agregamos el objeto recibido a la tabla.
+                    Conexion.CAT_NEGOCIO.Add(objNegocio);
+
+                    //Ejecutamos el método para guardar los cambios, el resultado nos indica cuantos registros se afectaron.
+                    int r = Conexion.SaveChanges();
+
+                    //Realizamos la comparación para saber que retornar.
+                    return r > 0 ? "S" : "N";
+                }
+            }
+            catch (Exception)
+            {
+                //Si se generó algún error retornamos una N
+                return "N";
+            }
+        }
+
+        /// <summary>
+        /// Método que obtiene todos los negocios relacionados a parte de una categoria.
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns>Lista anónima con la información de los negocios. Si se generó algún error retorna un nulo.</returns>
+        public IList GetNegociosRelacionados(string palabra)
+        {
+            try
+            {
+                //Realizamos la conexión a través de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Realizamos la consulta.
+                    var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
+                                         join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
+                                         join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
+                                         where subcategoria.NOMBRE.Contains(palabra) && negocio.IS_ACTIVO == true
+                                         select new
+                                         {
+                                             negocio.LATITUD,
+                                             negocio.LONGITUD,
+                                             negocio.ID_NEGOCIO,
+                                             negocio.DESCRIPCION,
+                                             negocio.NOMBRE,
+                                             negocio.HORARIOS,
+                                             relacion.ID_SUB_CATEGORIA,
+                                         }).ToList();
+
+                    //Retornamos el resultado de la consulta.
+                    return listaNegocios;
+                }
+            }
+            catch (Exception)
+            {
+                //Si se generó algún error, retornamos un nulo.
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Método que obtiene todos los negocios que estan ocupados.
         /// </summary>
         /// <returns></returns>
         public IList GetNegociosOcupados()
         {
             try
             {
+                //Realizamos la conexión a través de Entity Framework.
                 using (var Conexion = new BDEntities())
                 {
+                    //Realizamos la consulta.
                     var lista = (from a in Conexion.CAT_NEGOCIO
                                  join b in Conexion.TBL_RELACIION on a.ID_NEGOCIO equals b.ID_NEGOCIO
                                  where a.ESTATUS == 3 && a.IS_ACTIVO == true
-                                 select new {
+                                 select new
+                                 {
                                      a.ID_NEGOCIO,
                                      a.LATITUD,
                                      a.LONGITUD,
@@ -116,34 +146,42 @@ namespace EFModel.ServiceObject
                                      b.ID_SUB_CATEGORIA
                                  }).ToList();
 
+                    //Retornamos el resultado de la consulta.
                     return lista;
                 }
             }
             catch (Exception)
             {
+                //Si se generó algún error, retornamos un nulo.
                 return null;
             }
         }
 
         /// <summary>
-        /// 
+        /// Método que retorna la información de un pedido.
         /// </summary>
-        /// <param name="idNegocio"></param>
+        /// <param name="idNegocio">Entero que representa el id del negocio </param>
         /// <returns></returns>
         public PEDIDOS GetNegocioPedido(int idNegocio)
         {
             try
             {
+                //Realizamos la conexión a través de Entity Framework.
                 using (var Conexion = new BDEntities())
                 {
+
+                    //Realizamos la consulta.
                     var lista = (from a in Conexion.PEDIDOS
                                  where a.ID_NEGOCIO_ASIGNADO == idNegocio && a.ESTATUS == 1
                                  select a).FirstOrDefault();
+
+                    //Retornamos la lista obtenida.
                     return lista;
                 }
             }
             catch (Exception)
             {
+                //Si se generó algún error, retornamos un nulo.
                 return null;
             }
         }
@@ -164,7 +202,8 @@ namespace EFModel.ServiceObject
                 ds = conexionSQL.EjecutarStoredProcedure("SP_Negocio_GetTaxiLibre", Parametros);
                 return ds;
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 return null;
             }
         }
@@ -234,8 +273,8 @@ namespace EFModel.ServiceObject
             {
                 return "N";
             }
-        }
-
+        } 
+        #endregion
 
     }
 }

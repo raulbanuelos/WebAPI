@@ -11,7 +11,7 @@ namespace WebApiREST.Controllers
     {
         [AcceptVerbs("GET", "POST")]
         [Route("api/NegocioEstatus/{idNegocio:int}/{estatus:int}/")]
-        public IHttpActionResult CambiarEstatusPedido(int idNegocio, int estatus)
+        public IHttpActionResult CambiarEstatusNegocio(int idNegocio, int estatus)
         {
             //Estatus Negocio
             //1.-Libre

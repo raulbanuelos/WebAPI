@@ -11,6 +11,7 @@ namespace EFModel.ServiceObject
 {
     public class SO_Negocio
     {
+
         #region Métodos
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace EFModel.ServiceObject
                                              negocio.DESCRIPCION,
                                              negocio.NOMBRE,
                                              negocio.HORARIOS,
+                                             negocio.TELEFONO,
                                              relacion.ID_SUB_CATEGORIA,
                                          }).ToList();
 
@@ -106,6 +108,7 @@ namespace EFModel.ServiceObject
                                              negocio.DESCRIPCION,
                                              negocio.NOMBRE,
                                              negocio.HORARIOS,
+                                             negocio.TELEFONO,
                                              relacion.ID_SUB_CATEGORIA,
                                          }).ToList();
 
@@ -143,6 +146,7 @@ namespace EFModel.ServiceObject
                                      a.DESCRIPCION,
                                      a.NOMBRE,
                                      a.HORARIOS,
+                                     a.TELEFONO,
                                      b.ID_SUB_CATEGORIA
                                  }).ToList();
 

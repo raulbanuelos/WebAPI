@@ -25,7 +25,7 @@ namespace WebApiREST.Models
         /// <param name="descripcion"></param>
         /// <param name="horarios"></param>
         /// <returns></returns>
-        public static List<string> SetNegocio(double latitud, double longitud, string nombre, string descripcion, string horarios)
+        public static List<string> SetNegocio(double latitud, double longitud, string nombre, string descripcion, string horarios,string telefono)
         {
             CAT_NEGOCIO obj = new CAT_NEGOCIO();
             obj.LATITUD = latitud;
@@ -35,10 +35,12 @@ namespace WebApiREST.Models
             obj.HORARIOS = horarios;
             obj.FECHA_CREACION = DateTime.Now;
             obj.ID_USUARIO_CREACION = 1;
+            obj.TELEFONO = telefono;
             obj.FECHA_ACTUALIZACION = DateTime.Now;
             obj.ID_USUARIO_ACTUALIZACION = 1;
             obj.CODIGO_ACTIVACION = "CODIGO";
             obj.IS_ACTIVO = false;
+            obj.ESTATUS = 1;
             SO_Negocio SONegocio = new SO_Negocio();
 
             string r = SONegocio.SetNegocios(obj);
@@ -80,6 +82,7 @@ namespace WebApiREST.Models
                         obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
                         obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));
                         obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
+                        obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
                         ListaResultante.Add(obj);
                     }
                 }
@@ -174,6 +177,7 @@ namespace WebApiREST.Models
                         obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
                         obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio,null));
                         obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
+                        obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
                         listan.Add(obj);
                     }
                 }
@@ -257,6 +261,7 @@ namespace WebApiREST.Models
                         obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
                         obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
                         obj.Longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
+                        obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
                         ListaNegocios.Add(obj);
                     }
                     return ListaNegocios;
@@ -298,7 +303,7 @@ namespace WebApiREST.Models
             Negocio negocioResponde = new Negocio();
             
             //Ejecutamos el método para dar de alta un pedido, el resultado devuelto por el método representa el id del pedido insertado.
-            int idPedido = ServicioPedido.SetPedido(latitudInicial, longitudInicial, idUsuarioAplicacion);
+            int idPedido = ServicioPedido.SetPedido(latitudInicial, longitudInicial, idUsuarioAplicacion,latitudDestino,longitudDestino);
 
             //Ejecutamos el método para obtener todos los transportes libres, el resultado lo asignamos a una lista anónima.
             DataSet Negocios = ServicioNegocio.GetTransporteLibre();
@@ -331,6 +336,7 @@ namespace WebApiREST.Models
                             obj.Titulo = fila["NOMBRE"] != DBNull.Value ? Convert.ToString(fila["NOMBRE"]) : string.Empty;
                             obj.Horario = fila["HORARIOS"] != DBNull.Value ? Convert.ToString(fila["HORARIOS"]) : string.Empty;
                             obj.idCategoria = fila["ID_SUB_CATEGORIA"] != DBNull.Value ? Convert.ToInt32(fila["ID_SUB_CATEGORIA"]) : 0;
+                            obj.Telefono = fila["TELEFONO"] != DBNull.Value ? Convert.ToString(fila["TELEFONO"]) : string.Empty;
                             obj.Distancia = distancia;
 
                             //Agregamos el objeto a la lista.
@@ -397,7 +403,7 @@ namespace WebApiREST.Models
                 DateTime tiempoInicial = DateTime.Now;
 
                 //Obtenemos la hora actual y le sumamos 10 segundos.
-                DateTime tiempoFinal = tiempoInicial.AddSeconds(10);
+                DateTime tiempoFinal = tiempoInicial.AddSeconds(60);
 
                 //Ejecutamos el método para asignarle al servicio el negocio iterado.
                 ServicioPedido.SetOperadorServicio(ne.idNegocio, idPedido);
@@ -411,7 +417,7 @@ namespace WebApiREST.Models
                     RespiroSistema(1);
 
                     //Obtenermos la hora actual.
-                    tiempoFinal = DateTime.Now;
+                    tiempoInicial = DateTime.Now;
 
                     //Obtenemos el id del estatus del servicio
                     int idEstatus = ServicioPedido.GetEstatusPedido(idPedido);
@@ -493,6 +499,17 @@ namespace WebApiREST.Models
 
             
             return lista;
+        }
+
+        public static List<string> CambiarEstatusPedido(int idPedido, int idNegocio,int estatus)
+        {
+            SO_Pedidos ServicioPedido = new SO_Pedidos();
+            List<string> listaResultante = new List<string>();
+            int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido,estatus);
+            string a = r > 0 ? "S" : "N";
+            listaResultante.Add(a);
+            return listaResultante;
+                
         }
     }
 }

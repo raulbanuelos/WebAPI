@@ -51,6 +51,7 @@ namespace EFModel.ServiceObject
                                      c.HORARIOS,
                                      c.LATITUD,
                                      c.LONGITUD,
+                                     c.TELEFONO,
                                      s.ID_SUB_CATEGORIA
                                  }).ToList();
                     return Lista;

@@ -14,6 +14,7 @@ namespace WebApiREST.Models
         public string Horario { get; set; }
         public int idNegocio { get; set; }
         public int idCategoria { get; set; }
+        public string Telefono { get; set; }
 
         /// <summary>
         /// Double que representa la distancia entre el negocio y el usuario.

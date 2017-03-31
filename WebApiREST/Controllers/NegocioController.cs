@@ -49,10 +49,10 @@ namespace WebApiREST.Controllers
         /// <param name="horarios"></param>
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET")]
-        [Route("api/Negocio/{latitud:double}/{longitud:double}/{nombre}/{descripcion}/{horarios}")]
-        public IHttpActionResult SetNegocio(double latitud,double longitud, string nombre,string descripcion, string horarios)
+        [Route("api/Negocio/{latitud:double}/{longitud:double}/{nombre}/{descripcion}/{horarios}/{telefono}")]
+        public IHttpActionResult SetNegocio(double latitud,double longitud, string nombre,string descripcion, string horarios,string telefono)
         {
-            return Ok(DataManager.SetNegocio(latitud, longitud, nombre, descripcion, horarios));
+            return Ok(DataManager.SetNegocio(latitud, longitud, nombre, descripcion, horarios,telefono));
         }
 
         /// <summary>

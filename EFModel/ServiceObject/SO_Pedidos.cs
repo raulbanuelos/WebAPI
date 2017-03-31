@@ -15,7 +15,7 @@ namespace EFModel.ServiceObject
         /// <param name="longitud">Longitud del usuario</param>
         /// <param name="idUsuarioAplicacion">Id de la persona que pide el servicio</param>
         /// <returns>Entero que representa el id del servicio generado.</returns>
-        public int SetPedido(double latitud, double longitud, int idUsuarioAplicacion)
+        public int SetPedido(double latitud, double longitud, int idUsuarioAplicacion, double latitudDestino, double longitudDestino)
         {
             try
             {
@@ -27,6 +27,8 @@ namespace EFModel.ServiceObject
                     pedido.LATITUD_INICIAL = latitud;
                     pedido.LONGITUD_INICIAL = longitud;
                     pedido.ID_USUARIO_APLICACION = idUsuarioAplicacion;
+                    pedido.LATITUD_DESTINO = latitudDestino;
+                    pedido.LONGITUD_DESTINO = longitudDestino;
                     Conexion.PEDIDOS.Add(pedido);
                     Conexion.SaveChanges();
                     return pedido.ID_PEDIDO;
@@ -86,6 +88,26 @@ namespace EFModel.ServiceObject
             catch (Exception)
             {
 
+            }
+        }
+
+        public int SetCambiarEstatusPedido(int idNegocio, int idPedido,int estatus)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    PEDIDOS pedido = Conexion.PEDIDOS.Where(x => x.ID_PEDIDO == idPedido && x.ID_NEGOCIO_ASIGNADO == idNegocio).FirstOrDefault();
+
+                    //Asignamos el estatus #5 que representa el estatus aceptado
+                    pedido.ESTATUS = estatus;
+
+                    return Conexion.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
             }
         }
     }

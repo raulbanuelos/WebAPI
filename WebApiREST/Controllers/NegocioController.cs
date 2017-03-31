@@ -18,7 +18,7 @@ namespace WebApiREST.Controllers
         /// <param name="longitud"></param>
         /// <param name="idCategoria"></param>
         /// <returns></returns>
-        [System.Web.Http.AcceptVerbs("POST")]
+        [System.Web.Http.AcceptVerbs("GET","POST")]
         [Route("api/Negocio/{latitud:double}/{longitud:double}/{palabra}/{optional}")]
         public IHttpActionResult GetNegocio(double latitud, double longitud,string palabra,string optional)
         {
@@ -32,7 +32,7 @@ namespace WebApiREST.Controllers
         /// <param name="longitud"></param>
         /// <param name="a"></param>
         /// <returns></returns>
-        [AcceptVerbs("POST")]
+        [AcceptVerbs("POST","GET")]
         [Route("api/Negocio/{latitud:double}/{longitud:double}/{optional}")]
         public IHttpActionResult GetNegocios(double latitud, double longitud,string optional)
         {

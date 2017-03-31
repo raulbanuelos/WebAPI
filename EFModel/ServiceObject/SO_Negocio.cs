@@ -277,7 +277,36 @@ namespace EFModel.ServiceObject
             {
                 return "N";
             }
-        } 
+        }
+
+        /// <summary>
+        /// Método que cambia el estatus de un negocio.
+        /// </summary>
+        /// <param name="idNegocio">Entero que representa el id del negocio.</param>
+        /// <param name="estatus">Entero que representa el estatus: 1=Libre, 2=Asignado, 3=Ocupado, 4=No disponible</param>
+        /// <returns></returns>
+        public int SetCambiarEstatus(int idNegocio, int estatus)
+        {
+            try
+            {
+                //Realizamos la conexión a travéz de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Obtenemos el registro.
+                    CAT_NEGOCIO obj = Conexion.CAT_NEGOCIO.Where(x => x.ID_NEGOCIO == idNegocio).FirstOrDefault();
+
+                    //Cambiamos el valor al estatus deceado.
+                    obj.ESTATUS = estatus;
+
+                    //Ejecutamos el método y retornamos el valor.
+                    return Conexion.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
         #endregion
 
     }

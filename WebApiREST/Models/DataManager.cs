@@ -25,11 +25,11 @@ namespace WebApiREST.Models
         /// <param name="descripcion"></param>
         /// <param name="horarios"></param>
         /// <returns></returns>
-        public static List<string> SetNegocio(double latitud, double longitud, string nombre, string descripcion, string horarios,string telefono)
+        public static List<string> SetNegocio(double latitud, double longitud, string nombre, string descripcion, string horarios, string telefono)
         {
             CAT_NEGOCIO obj = new CAT_NEGOCIO();
             obj.LATITUD = latitud;
-            obj.LONGITUD =longitud;
+            obj.LONGITUD = longitud;
             obj.NOMBRE = nombre;
             obj.DESCRIPCION = descripcion;
             obj.HORARIOS = horarios;
@@ -137,7 +137,7 @@ namespace WebApiREST.Models
 
                     FO_ItemCombo obj = new FO_ItemCombo();
                     obj.Descripcion = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(categoria, null));
-                    obj.Valor = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(categoria,null));
+                    obj.Valor = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(categoria, null));
 
                     ListaResultante.Add(obj);
                 }
@@ -165,26 +165,26 @@ namespace WebApiREST.Models
                     System.Type tipo = negocio.GetType();
 
                     double latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
-                    double longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio,null));
+                    double longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
                     double distancia = MedirDistancia(latitud_actual, latitud, longitud_actual, longitud);
                     if (distancia <= 1.5) //distancia <= 1.5
                     {
                         Negocio obj = new Negocio();
-                        obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio,null));
+                        obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
                         obj.Longitud = longitud;
                         obj.idNegocio = Convert.ToInt32(tipo.GetProperty("ID_NEGOCIO").GetValue(negocio, null));
                         obj.Descripcion = Convert.ToString(tipo.GetProperty("DESCRIPCION").GetValue(negocio, null));
                         obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
-                        obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio,null));
+                        obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));
                         obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
                         obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
                         listan.Add(obj);
                     }
                 }
             }
-            
+
             return listan;
-            
+
         }
 
         /// <summary>
@@ -214,10 +214,10 @@ namespace WebApiREST.Models
         /// <param name="LONGITUD_1"></param>
         /// <param name="LONGITUD_2"></param>
         /// <returns></returns>
-        private static double MedirDistancia(double LATITUD_1,double LATITUD_2,double LONGITUD_1,double LONGITUD_2)
+        private static double MedirDistancia(double LATITUD_1, double LATITUD_2, double LONGITUD_1, double LONGITUD_2)
         {
             double distancia = 0;
-            distancia = (Math.Acos(Math.Sin(GradosARadianes(LATITUD_1)) * Math.Sin(  GradosARadianes(LATITUD_2)) + Math.Cos(GradosARadianes(LATITUD_1)) * Math.Cos(GradosARadianes(LATITUD_2)) * Math.Cos(GradosARadianes(LONGITUD_1) - GradosARadianes(LONGITUD_2))) * 6378);
+            distancia = (Math.Acos(Math.Sin(GradosARadianes(LATITUD_1)) * Math.Sin(GradosARadianes(LATITUD_2)) + Math.Cos(GradosARadianes(LATITUD_1)) * Math.Cos(GradosARadianes(LATITUD_2)) * Math.Cos(GradosARadianes(LONGITUD_1) - GradosARadianes(LONGITUD_2))) * 6378);
             return distancia;
         }
 
@@ -284,13 +284,13 @@ namespace WebApiREST.Models
         /// <param name="correo"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static int SetUsuarioAplicacion(string correo, string pass,string usuario,string nombre,string aPaterno,string aMaterno,DateTime fechaNacimiento,string movil)
+        public static int SetUsuarioAplicacion(string correo, string pass, string usuario, string nombre, string aPaterno, string aMaterno, DateTime fechaNacimiento, string movil)
         {
             SO_Usuario_Aplicacion ServicioUsuario = new SO_Usuario_Aplicacion();
-            return ServicioUsuario.SetUsuarioAplicacion(correo, pass,usuario,nombre,aPaterno,aMaterno,fechaNacimiento,movil);
+            return ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil);
         }
 
-        public static Negocio GetAuto(double longitudInicial, double latitudInicial,double longitudDestino,double latitudDestino, int idUsuarioAplicacion)
+        public static Negocio GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)
         {
             //Declaramos los servicios que utilizaremos en el método.
             SO_Negocio ServicioNegocio = new SO_Negocio();
@@ -301,9 +301,9 @@ namespace WebApiREST.Models
 
             //Declaramos un objeto de tipo negocio que representa el negocio que responde al cliente.
             Negocio negocioResponde = new Negocio();
-            
+
             //Ejecutamos el método para dar de alta un pedido, el resultado devuelto por el método representa el id del pedido insertado.
-            int idPedido = ServicioPedido.SetPedido(latitudInicial, longitudInicial, idUsuarioAplicacion,latitudDestino,longitudDestino);
+            int idPedido = ServicioPedido.SetPedido(latitudInicial, longitudInicial, idUsuarioAplicacion, latitudDestino, longitudDestino);
 
             //Ejecutamos el método para obtener todos los transportes libres, el resultado lo asignamos a una lista anónima.
             DataSet Negocios = ServicioNegocio.GetTransporteLibre();
@@ -387,7 +387,7 @@ namespace WebApiREST.Models
                     }
                 }
             }
-            
+
 
 
             //Ordenamos la lista de posibles candidatos de acuerdo a la distancia. Menor - Mayor
@@ -447,7 +447,7 @@ namespace WebApiREST.Models
 
                 //Retornamos un nulo.
                 return null;
-            
+
         }
 
         public static void RespiroSistema(double nSecs)
@@ -480,7 +480,7 @@ namespace WebApiREST.Models
         {
             SO_Usuario_Aplicacion ServiceObject = new SO_Usuario_Aplicacion();
 
-            IList InformacionBD =  ServiceObject.LoginUsuarioAplicacion(correo, pass);
+            IList InformacionBD = ServiceObject.LoginUsuarioAplicacion(correo, pass);
             List<UsuarioAplicacion> lista = new List<UsuarioAplicacion>();
             if (InformacionBD != null)
             {
@@ -491,25 +491,59 @@ namespace WebApiREST.Models
                     UsuarioAplicacion obj = new UsuarioAplicacion();
                     obj.idUsuarioAplicacion = (int)tipo.GetProperty("ID_USUARIO_APLICACION").GetValue(usuario, null);
                     obj.Correo = (string)tipo.GetProperty("CORREO").GetValue(usuario, null);
-                    obj.Contrasena = (string)tipo.GetProperty("CONTRASENA").GetValue(usuario,null);
+                    obj.Contrasena = (string)tipo.GetProperty("CONTRASENA").GetValue(usuario, null);
 
                     lista.Add(obj);
                 }
             }
 
-            
+
             return lista;
         }
 
-        public static List<string> CambiarEstatusPedido(int idPedido, int idNegocio,int estatus)
+        /// <summary>
+        /// Método que cambia el estatus de un pedido.
+        /// </summary>
+        /// <param name="idPedido">Entero que representa el id del pedido.</param>
+        /// <param name="idNegocio"></param>
+        /// <param name="estatus"></param>
+        /// <returns></returns>
+        public static List<string> CambiarEstatusPedido(int idPedido, int idNegocio, int estatus)
         {
             SO_Pedidos ServicioPedido = new SO_Pedidos();
             List<string> listaResultante = new List<string>();
-            int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido,estatus);
+            int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido, estatus);
             string a = r > 0 ? "S" : "N";
             listaResultante.Add(a);
             return listaResultante;
-                
+
+        }
+
+        /// <summary>
+        /// Método que cambia el estatus del servicio.
+        /// </summary>
+        /// <param name="idNegocio">Id del negocio que se requiere cambiar es estatus.</param>
+        /// <param name="estatus">Entero que representa el estatus: 1=Libre, 2=Asignado, 3=Ocupado, 4=No disponible</param>
+        /// <returns></returns>
+        public static List<string> CambiarEstatusNegocio(int idNegocio, int estatus)
+        {
+            //Inicializamos los servicios del negocio.
+            SO_Negocio ServicioNegocio = new SO_Negocio();
+
+            //Declaramos una lista la cual será la que retornemos en el método.
+            List<string> Lista = new List<string>();
+
+            //Ejecutamos el método y el resultado lo asignamos a una variable local.
+            int r = ServicioNegocio.SetCambiarEstatus(idNegocio, estatus);
+
+            //Comparamos si el resultado es mayor a 0 asignamos una "S", sino una "N".
+            string s = r > 0 ? "S" : "N";
+
+            //Agregamos la variable a la lista.
+            Lista.Add(s);
+
+            //Retornamos la lista creada.
+            return Lista;
         }
     }
 }

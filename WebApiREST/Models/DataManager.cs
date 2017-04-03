@@ -17,7 +17,7 @@ namespace WebApiREST.Models
     {
 
         /// <summary>
-        /// 
+        /// Método que inserta un negocio en la tabla.
         /// </summary>
         /// <param name="latitud"></param>
         /// <param name="longitud"></param>
@@ -43,10 +43,18 @@ namespace WebApiREST.Models
             obj.ESTATUS = 1;
             SO_Negocio SONegocio = new SO_Negocio();
 
-            string r = SONegocio.SetNegocios(obj);
+            int r = SONegocio.SetNegocios(obj);
 
             List<string> lista = new List<string>();
-            lista.Add(r);
+
+            if (r > 0)
+            {
+                lista.Add("Tu negocio a sido registrado, pronto nos comunicaremos al número telefónico que registraste para activar tu cuenta.");
+            }
+            else
+            {
+                lista.Add("Upps! Hubo algún problema al registrar tu negocio.");
+            }
 
             return lista;
         }

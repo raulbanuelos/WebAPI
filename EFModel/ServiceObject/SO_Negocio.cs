@@ -58,8 +58,8 @@ namespace EFModel.ServiceObject
         /// Método que agrega un objeto de tipo Negocio a la tabla de negocios.
         /// </summary>
         /// <param name="objNegocio">Objeto que representa el negocio que se requiere insertar.</param>
-        /// <returns>Retorna un S si se guardo correctamente. Retorna una N si se generó algún error.</returns>
-        public string SetNegocios(CAT_NEGOCIO objNegocio)
+        /// <returns>Retorna el número de registros insertados. Si se generó algún errror retorna un 0</returns>
+        public int SetNegocios(CAT_NEGOCIO objNegocio)
         {
             try
             {
@@ -72,14 +72,13 @@ namespace EFModel.ServiceObject
                     //Ejecutamos el método para guardar los cambios, el resultado nos indica cuantos registros se afectaron.
                     int r = Conexion.SaveChanges();
 
-                    //Realizamos la comparación para saber que retornar.
-                    return r > 0 ? "S" : "N";
+                    return r;
                 }
             }
             catch (Exception)
             {
-                //Si se generó algún error retornamos una N
-                return "N";
+                //Si se generó algún error retornamos una 0
+                return 0;
             }
         }
 

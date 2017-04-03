@@ -49,6 +49,7 @@ namespace EFModel.ServiceObject
                 {
                     objUsuario.CORREO = correo;
                     objUsuario.CONTRASENA = pass;
+                    objUsuario.USUARIO = usuario;
                     objUsuario.NOMBRE = nombre;
                     objUsuario.APELLIDO_PATERNO = aPaterno;
                     objUsuario.APELLIDO_MATERNO = aMaterno;
@@ -65,6 +66,58 @@ namespace EFModel.ServiceObject
             catch (Exception)
             {
                 return 0;
+            }
+        }
+
+        /// <summary>
+        /// Método que se utiliza para verificar si el correo existe.
+        /// </summary>
+        /// <param name="correo"></param>
+        /// <returns></returns>
+        public bool ExistsCorreo(string correo)
+        {
+            try
+            {
+                //Realizamos la conexión a través de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Realizamos la consulta y el resultado lo asignamos a un objeto anónimo.
+                    var obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.CORREO.Equals(correo)).FirstOrDefault();
+
+                    //Comparamos si el resultado de la consulta es diferente de Nulo retornamos un true, de lo contrario retornamos un false.
+                    return obj != null ? true : false;
+                }
+            }
+            catch (Exception)
+            {
+                //Retornamos un false.
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Método que se utiliza para verificar si el usuario existe.
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        public bool ExistsUsuario(string usuario)
+        {
+            try
+            {
+                //Realizamos la conexión a través de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Realizamos la consulta y el resultado lo asignamos a un objeto anónimo.
+                    var obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.USUARIO.Equals(usuario)).FirstOrDefault();
+
+                    //Comparamos si el resultado de la consulta es diferente de Nulo retornamos un true, de lo contrario retornamos un false.
+                    return obj != null ? true : false;
+                }
+            }
+            catch (Exception)
+            {
+                //Retornamos un false.
+                return false;
             }
         }
     }

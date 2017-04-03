@@ -284,10 +284,30 @@ namespace WebApiREST.Models
         /// <param name="correo"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static int SetUsuarioAplicacion(string correo, string pass, string usuario, string nombre, string aPaterno, string aMaterno, DateTime fechaNacimiento, string movil)
+        public static List<string> SetUsuarioAplicacion(string correo, string pass, string usuario, string nombre, string aPaterno, string aMaterno, DateTime fechaNacimiento, string movil)
         {
             SO_Usuario_Aplicacion ServicioUsuario = new SO_Usuario_Aplicacion();
-            return ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil);
+            List<string> lista = new List<string>();
+
+            if (ServicioUsuario.ExistsUsuario(usuario))
+            {
+                lista.Add("El usuario que intentas registrar ya esta ocupado");
+                return lista;
+            }
+
+            if (ServicioUsuario.ExistsCorreo(correo))
+            {
+                lista.Add("El correo que intentas registrar ya esta ocupado");
+                return lista;
+            }
+
+            int a = ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil);
+
+            string respuesta = a > 0 ? "Has sido registrado!" : "Upps, al parecer hubo algún problema";
+
+            lista.Add(respuesta);
+
+            return lista;
         }
 
         public static Negocio GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)

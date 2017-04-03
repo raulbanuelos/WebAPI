@@ -14,7 +14,7 @@ namespace WebApiREST.Controllers
         /// <param name="usuario"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        [AcceptVerbs("GET")]
+        [AcceptVerbs("GET", "POST")]
         [Route("api/UsuarioAplicacion/{correo}/{pass}/{usuario}/{nombre}/{aPaterno}/{aMaterno}/{movil}/{fechaNacimiento}")]
         public IHttpActionResult SetUsuarioAplicacion(string correo, string pass,string usuario,string nombre,string aPaterno,string aMaterno, string movil,string fechaNacimiento)
         {

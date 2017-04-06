@@ -20,5 +20,14 @@ namespace WebApiREST.Models
         /// Double que representa la distancia entre el negocio y el usuario.
         /// </summary>
         public double Distancia { get; set; }
+
+        /// <summary>
+        /// Entero que representa el estatus del negocio
+        /// 1.-Libre
+        /// 2.-Asignado
+        /// 3.-Ocupado
+        /// 4.-No Disponible
+        /// </summary>
+        public int Estatus { get; set; }
     }
 }

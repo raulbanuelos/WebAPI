@@ -17,7 +17,7 @@ namespace EFModel.ServiceObject
                 using (var conexion = new BDEntities())
                 {
                     var usu = (from c in conexion.CAT_USUARIO_APLICACION
-                           where c.CORREO == correo && c.CONTRASENA == pass && c.IS_ACTIVO == true
+                           where c.CORREO == correo && c.CONTRASENA == pass
                            select c).ToList();
                     return usu;
                 }

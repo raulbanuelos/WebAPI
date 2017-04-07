@@ -12,5 +12,7 @@ namespace WebApiREST.Models
         public string Correo { get; set; }
 
         public string Contrasena { get; set; }
+
+        public bool IsActivo { get; set; }
     }
 }

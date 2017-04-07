@@ -224,6 +224,7 @@
     <Compile Include="Models\DataManager.cs" />
     <Compile Include="Models\FO_ItemCombo.cs" />
     <Compile Include="Models\Negocio.cs" />
+    <Compile Include="Models\RequestPixie.cs" />
     <Compile Include="Models\UsuarioAplicacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

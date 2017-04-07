@@ -36,5 +36,12 @@ namespace WebApiREST.Controllers
         {
             return Ok(DataManager.LoginUsuarioAplicacion(correo, pass));
         }
+
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/UsuarioAplicacion/VerificaCodigo/{idUsuario:int}/{codigo}")]
+        public IHttpActionResult VerificaCodigo(int idUsuario, string codigo)
+        {
+            return Ok(DataManager.VerificarCodigo(idUsuario, codigo));
+        }
     }
 }

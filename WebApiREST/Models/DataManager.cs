@@ -59,6 +59,8 @@ namespace WebApiREST.Models
             return lista;
         }
 
+        
+
         /// <summary>
         /// Método que busca los taxis cercas de una latitud y longitud enviada.
         /// </summary>
@@ -332,34 +334,118 @@ namespace WebApiREST.Models
             }
         }
 
+
+        public static List<RequestPixie> VerificarCodigo(int idUsuario, string codigo)
+        {
+            List<RequestPixie> ListaResultante = new List<RequestPixie>();
+
+            SO_Usuario_Aplicacion ServicioUsuario = new SO_Usuario_Aplicacion();
+
+            object respuesta = ServicioUsuario.ChecarCodigo(idUsuario,codigo);
+
+            if (respuesta != null)
+            {
+                if (Convert.ToBoolean(respuesta))
+                {
+                    object respuestaActivacion = ServicioUsuario.ActivarCuenta(idUsuario);
+                    if (respuestaActivacion != null)
+                    {
+                        ListaResultante.Add(new RequestPixie
+                        {
+                            IsSuccess = true,
+                            Code = 1,
+                            Message = "Felicidades, tu cuenta a sido activada!"
+                        });
+                    }
+                    else
+                    {
+                        ListaResultante.Add(new RequestPixie
+                        {
+                            IsSuccess = false,
+                            Code = 3,
+                            Message = "Upss! Hubo algún problema, por favor intenta mas tarde"
+                        });
+                    }
+                }
+                else
+                {
+                    ListaResultante.Add(new RequestPixie
+                    {
+                        IsSuccess = true,
+                        Code = 2,
+                        Message = "El código de activación no coincide."
+                    });
+                }
+            }
+            else {
+                ListaResultante.Add(new RequestPixie
+                {
+                    IsSuccess = false,
+                    Code = 3,
+                    Message = "Upss! Hubo algún problema, por favor intenta mas tarde"
+                });
+            }
+
+            return ListaResultante;
+        }
+
         /// <summary>
         /// Método que da de alta un usuario de la aplicación.
         /// </summary>
         /// <param name="correo"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static List<string> SetUsuarioAplicacion(string correo, string pass, string usuario, string nombre, string aPaterno, string aMaterno, DateTime fechaNacimiento, string movil)
+        public static List<RequestPixie> SetUsuarioAplicacion(string correo, string pass, string usuario, string nombre, string aPaterno, string aMaterno, DateTime fechaNacimiento, string movil)
         {
             SO_Usuario_Aplicacion ServicioUsuario = new SO_Usuario_Aplicacion();
-            List<string> lista = new List<string>();
+            List<RequestPixie> lista = new List<RequestPixie>();
 
             if (ServicioUsuario.ExistsUsuario(usuario))
             {
-                lista.Add("El usuario que intentas registrar ya esta ocupado");
+                lista.Add(new RequestPixie {
+                    IsSuccess = true,
+                    Code = 2,
+                    Message = "El usuario que intentas ingresar ya esta ocupado, por favor elige otro",
+                    Data = "0"
+                });
                 return lista;
             }
 
             if (ServicioUsuario.ExistsCorreo(correo))
             {
-                lista.Add("El correo que intentas registrar ya esta ocupado");
+                lista.Add(new RequestPixie
+                {
+                    IsSuccess = true,
+                    Code = 2,
+                    Message = "El correo que intentas registrar ya esta ocupado",
+                    Data = "0"
+                });
                 return lista;
             }
 
             int a = ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil);
 
-            string respuesta = a > 0 ? "Has sido registrado!" : "Upps, al parecer hubo algún problema";
-
-            lista.Add(respuesta);
+            if (a > 0)
+            {
+                lista.Add(new RequestPixie
+                {
+                    IsSuccess = true,
+                    Code = 1,
+                    Message = "Has sido registrado! Pronto te llegara un mensaje con el código de activación de tu cuenta.",
+                    Data = Convert.ToString(a)
+                });
+            }
+            else
+            {
+                lista.Add(new RequestPixie
+                {
+                    IsSuccess = false,
+                    Code = 3,
+                    Message = "Upps! Al parecer hubo un error al registrar, intenta mas tarde.",
+                    Data = "0"
+                    
+                });
+            }
 
             return lista;
         }

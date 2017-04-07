@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,8 +60,8 @@ namespace EFModel.ServiceObject
                     objUsuario.CODIGO_ACTIVACION = "CODIGO";
                     objUsuario.FECHA_INGRESO = DateTime.Now;
                     conexion.CAT_USUARIO_APLICACION.Add(objUsuario);
-                    int r = conexion.SaveChanges();
-                    return r;
+                    conexion.SaveChanges();
+                    return objUsuario.ID_USUARIO_APLICACION;
                 }
             }
             catch (Exception)
@@ -118,6 +119,44 @@ namespace EFModel.ServiceObject
             {
                 //Retornamos un false.
                 return false;
+            }
+        }
+
+        public object ChecarCodigo(int idUsuario, string codigo)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    var obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.ID_USUARIO_APLICACION.Equals(idUsuario) && x.CODIGO_ACTIVACION.Equals(codigo)).FirstOrDefault();
+
+                    return obj != null ? true : false;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public object ActivarCuenta(int idCodigo)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    CAT_USUARIO_APLICACION obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.ID_USUARIO_APLICACION.Equals(idCodigo)).FirstOrDefault();
+
+                    obj.IS_ACTIVO = true;
+                    
+                    Conexion.Entry(obj).State = EntityState.Modified;
+
+                    return Conexion.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

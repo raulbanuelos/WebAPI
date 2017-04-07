@@ -94,6 +94,5 @@ namespace WebApiREST.Controllers
         {
             return Ok(DataManager.GetLogin(usuario, contrasena));
         }
-    
     }
 }

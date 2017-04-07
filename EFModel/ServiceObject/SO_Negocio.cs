@@ -15,6 +15,45 @@ namespace EFModel.ServiceObject
         #region Métodos
 
         /// <summary>
+        /// Método que 
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <param name="isActivo"></param>
+        /// <returns></returns>
+        public IList GetAllNegociosByCategoria(int idCategoria,bool isActivo,int estatus)
+        {
+            try
+            {
+                //Realizamos la conexión a través de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Realizamos la consulta.
+                    var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
+                                         join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
+                                         join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
+                                         where negocio.IS_ACTIVO == isActivo && subcategoria.ID_SUB_CATEGORIA == idCategoria && negocio.ESTATUS == estatus
+                                         select new
+                                         {
+                                             negocio.LATITUD,
+                                             negocio.LONGITUD,
+                                             negocio.ID_NEGOCIO,
+                                             negocio.DESCRIPCION,
+                                             negocio.NOMBRE,
+                                             negocio.HORARIOS,
+                                             negocio.TELEFONO,
+                                             relacion.ID_SUB_CATEGORIA,
+                                             negocio.ESTATUS,
+                                         }).ToList();
+                    return listaNegocios;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Método que se utiliza para obtener todos los negocios.
         /// </summary>
         /// <returns>Lista anónima con la información de los negocios.Retorna un nulo si se generó algun error.</returns>

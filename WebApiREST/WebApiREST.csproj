@@ -214,6 +214,7 @@
     <Compile Include="Controllers\NegocioController.cs" />
     <Compile Include="Controllers\NegocioEstatusController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
+    <Compile Include="Controllers\TransporteController.cs" />
     <Compile Include="Controllers\UsuarioAplicacionController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

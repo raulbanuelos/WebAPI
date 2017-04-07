@@ -60,6 +60,51 @@ namespace WebApiREST.Models
         }
 
         /// <summary>
+        /// Método que busca los taxis cercas de una latitud y longitud enviada.
+        /// </summary>
+        /// <param name="latitud_actual">Double que representa la latitud de la persona.</param>
+        /// <param name="longitud_actual">Double que representa la longitud de la persona.</param>
+        /// <returns></returns>
+        public static List<Negocio> GetAllNegociosTaxisCercas(double latitud_actual, double longitud_actual)
+        {
+            SO_Negocio ServicioNegocio = new SO_Negocio();
+
+            IList inforamcionBD = ServicioNegocio.GetAllNegociosByCategoria(416, true,1);
+
+            List<Negocio> ListaResultante = new List<Negocio>();
+
+            if (inforamcionBD != null)
+            {
+                foreach (var negocio in inforamcionBD)
+                {
+                    System.Type tipo = negocio.GetType();
+
+                    double latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
+                    double longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
+                    double distancia = MedirDistancia(latitud_actual, latitud, longitud_actual, longitud);
+
+                    if (distancia <= 2) //distancia <= 1.5
+                    {
+                        Negocio obj = new Negocio();
+                        obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
+                        obj.Longitud = longitud;
+                        obj.idNegocio = Convert.ToInt32(tipo.GetProperty("ID_NEGOCIO").GetValue(negocio, null));
+                        obj.Descripcion = Convert.ToString(tipo.GetProperty("DESCRIPCION").GetValue(negocio, null));
+                        obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
+                        obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));
+                        obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
+                        obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
+                        obj.Distancia = distancia;
+                        obj.Estatus = Convert.ToInt32(tipo.GetProperty("ESTATUS").GetValue(negocio,null));
+                        ListaResultante.Add(obj);
+                    }
+                }
+            }
+
+            return ListaResultante;
+        }
+
+        /// <summary>
         /// Método que se utiliza para obtener todos los negocios cercas de una ubicación.
         /// </summary>
         /// <param name="latitud_actual"></param>

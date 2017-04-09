@@ -76,7 +76,8 @@ namespace WebApiREST.Controllers
         /// <param name="longitud"></param>
         /// <param name="idNegocio"></param>
         /// <returns></returns>
-        [Route("api/Negocio({latitud:double}/{longitud:double}/{idNegocio:int}")]
+        [AcceptVerbs("GET","POST")]
+        [Route("api/Negocio/ActualizaPosicion/{latitud:double}/{longitud:double}/{idNegocio:int}")]
         public IHttpActionResult SetPositionNegocio(double latitud, double longitud, int idNegocio)
         {
             return Ok(DataManager.SetPositionNegocio(latitud, longitud, idNegocio));

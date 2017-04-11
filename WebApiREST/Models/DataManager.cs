@@ -248,16 +248,31 @@ namespace WebApiREST.Models
         /// <param name="longitud"></param>
         /// <param name="idNegocio"></param>
         /// <returns></returns>
-        public static List<string> SetPositionNegocio(double latitud, double longitud, int idNegocio)
+        public static RequestPixie SetPositionNegocio(double latitud, double longitud, int idNegocio)
         {
             SO_Negocio ServiceNegocio = new SO_Negocio();
 
             string r = ServiceNegocio.SetPositionNegocio(latitud, longitud, idNegocio);
-
-            List<string> lista = new List<string>();
-            lista.Add(r);
-
-            return lista;
+            if (r == "S")
+            {
+                return new RequestPixie
+                {
+                    IsSuccess = true,
+                    Code = 1,
+                    Message = "Se actualizò la posiciòn",
+                    Data = string.Empty
+                };
+            }
+            else {
+                return new RequestPixie
+                {
+                    IsSuccess = false,
+                    Code = 3,
+                    Message = "Error al actualizar la posiciòn",
+                    Data = string.Empty
+                };
+            }
+           
         }
 
         /// <summary>

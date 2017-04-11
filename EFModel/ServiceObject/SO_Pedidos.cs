@@ -22,7 +22,7 @@ namespace EFModel.ServiceObject
                 using (var Conexion = new BDEntities())
                 {
                     PEDIDOS pedido = new PEDIDOS();
-                    pedido.ESTATUS = 1;
+                    pedido.ESTATUS = 6;
                     pedido.FECHA_PEDIDO = DateTime.Now;
                     pedido.LATITUD_INICIAL = latitud;
                     pedido.LONGITUD_INICIAL = longitud;
@@ -88,6 +88,28 @@ namespace EFModel.ServiceObject
             catch (Exception)
             {
 
+            }
+        }
+
+        public int GetPedidoAsignadoPorNegocio(int idNegocio)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    var resultado = (from p in Conexion.PEDIDOS
+                                     where p.ID_NEGOCIO_ASIGNADO == idNegocio && p.ESTATUS == 6
+                                     select new
+                                     {
+                                         p.ID_PEDIDO
+                                     }).FirstOrDefault();
+
+                    return Convert.ToInt32(resultado);
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
             }
         }
 

@@ -277,6 +277,34 @@ namespace WebApiREST.Models
            
         }
 
+        public static RequestPixie GetPedidosAsignados(int idNegocio)
+        {
+            SO_Pedidos ServicioPedido = new SO_Pedidos();
+
+            int idPedido =ServicioPedido.GetPedidoAsignadoPorNegocio(idNegocio);
+
+            if (idPedido > 0)
+            {
+                return new RequestPixie
+                {
+                    IsSuccess = true,
+                    Data = idPedido.ToString(),
+                    Message = "Tienes un nuevo servicio",
+                    Code = 1
+                };
+            }
+            else
+            {
+                return new RequestPixie
+                {
+                    IsSuccess = false,
+                    Data = "0",
+                    Message = "No tienes servicios asignados",
+                    Code = 3
+                };
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

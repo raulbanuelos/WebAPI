@@ -95,5 +95,12 @@ namespace WebApiREST.Controllers
         {
             return Ok(DataManager.GetLogin(usuario, contrasena));
         }
+
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/Negocio/VerificarPedidosAsignados/{idNegocio:int}")]
+        public IHttpActionResult GetPermisosAsignados(int idNegocio)
+        {
+            return Ok(DataManager.GetPedidosAsignados(idNegocio));
+        }
     }
 }

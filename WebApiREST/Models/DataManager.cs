@@ -482,7 +482,6 @@ namespace WebApiREST.Models
             postData.Add(new KeyValuePair<string, string>("login", "rbanuelosd"));
             postData.Add(new KeyValuePair<string, string>("passwd", "qiwevxji"));
             postData.Add(new KeyValuePair<string, string>("dest", movil));
-            postData.Add(new KeyValuePair<string, string>("dest", movil));
             postData.Add(new KeyValuePair<string, string>("msg", "Bienvenido a PixieLab, tu código de activación es: " + codigoActivacion));
             //Remitente autorizado por Altiria al dar de alta el servicio.
             //Omitir el parametro si no se cuenta con ninguno.

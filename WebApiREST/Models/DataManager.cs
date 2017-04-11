@@ -5,6 +5,8 @@ using EFModel.ServiceObject;
 using EFModel;
 using System.Collections;
 using System.Data;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace WebApiREST.Models
 {
@@ -436,8 +438,10 @@ namespace WebApiREST.Models
                 });
                 return lista;
             }
+            
+            string codigoActivacion = RandomString(7);
 
-            int a = ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil);
+            int a = ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil,codigoActivacion);
 
             if (a > 0)
             {
@@ -448,6 +452,8 @@ namespace WebApiREST.Models
                     Message = "Has sido registrado! Pronto te llegara un mensaje con el código de activación de tu cuenta.",
                     Data = Convert.ToString(a)
                 });
+
+                EnviarCodigoActivacion(codigoActivacion,movil);
             }
             else
             {
@@ -462,6 +468,62 @@ namespace WebApiREST.Models
             }
 
             return lista;
+        }
+
+        private static void EnviarCodigoActivacion(string codigoActivacion,string movil)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://www.altiria.net");
+            client.Timeout = TimeSpan.FromSeconds(60);
+
+            var postData = new List<KeyValuePair<string, string>>();
+            postData.Add(new KeyValuePair<string, string>("cmd", "sendsms"));
+            postData.Add(new KeyValuePair<string, string>("domainId", "demopr"));
+            postData.Add(new KeyValuePair<string, string>("login", "rbanuelosd"));
+            postData.Add(new KeyValuePair<string, string>("passwd", "qiwevxji"));
+            postData.Add(new KeyValuePair<string, string>("dest", movil));
+            postData.Add(new KeyValuePair<string, string>("dest", movil));
+            postData.Add(new KeyValuePair<string, string>("msg", "Bienvenido a PixieLab, tu código de activación es: " + codigoActivacion));
+            //Remitente autorizado por Altiria al dar de alta el servicio.
+            //Omitir el parametro si no se cuenta con ninguno.
+            //postData.Add(new KeyValuePair<string, string>("senderId", "remitente"));
+            HttpContent content = new FormUrlEncodedContent(postData);
+            String err = "";
+            String resp = "";
+            try
+            {
+                //Como ejemplo la peticion se enva a www.altiria.net/sustituirPOSTsms
+                //Se debe reemplazar la cadena '/sustituirPOSTsms' por la parte correspondiente
+                //de la URL suministrada por Altiria al dar de alta el servicio
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/http");
+                request.Content = content;
+                content.Headers.ContentType.CharSet = "UTF-8";
+                request.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                HttpResponseMessage response = client.SendAsync(request).Result;
+                var responseString = response.Content.ReadAsStringAsync();
+                resp = responseString.Result;
+            }
+            catch (Exception e)
+            {
+                err = e.Message;
+            }
+            finally
+            {
+                if (err != "")
+                    Console.WriteLine(err);
+                else
+                    Console.WriteLine(resp);
+            }
+
+        }
+
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public static Negocio GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)

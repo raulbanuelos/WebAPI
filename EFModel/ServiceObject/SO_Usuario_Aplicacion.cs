@@ -38,7 +38,7 @@ namespace EFModel.ServiceObject
         /// <param name="fechaNacimiento"></param>
         /// <param name="movil"></param>
         /// <returns></returns>
-        public int SetUsuarioAplicacion(string correo, string pass,string usuario,string nombre,string aPaterno,string aMaterno,DateTime fechaNacimiento,string movil)
+        public int SetUsuarioAplicacion(string correo, string pass,string usuario,string nombre,string aPaterno,string aMaterno,DateTime fechaNacimiento,string movil,string codigoActivacion)
         {
             CAT_USUARIO_APLICACION objUsuario = new CAT_USUARIO_APLICACION();
             try
@@ -54,7 +54,7 @@ namespace EFModel.ServiceObject
                     objUsuario.FECHA_NACIMIENTO = fechaNacimiento;
                     objUsuario.MOVIL = movil;
                     objUsuario.IS_ACTIVO = false;
-                    objUsuario.CODIGO_ACTIVACION = "CODIGO";
+                    objUsuario.CODIGO_ACTIVACION = codigoActivacion;
                     objUsuario.FECHA_INGRESO = DateTime.Now;
                     conexion.CAT_USUARIO_APLICACION.Add(objUsuario);
                     conexion.SaveChanges();

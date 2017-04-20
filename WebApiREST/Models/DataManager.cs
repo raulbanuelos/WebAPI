@@ -466,8 +466,9 @@ namespace WebApiREST.Models
                 });
                 return lista;
             }
-            
-            string codigoActivacion = RandomString(7);
+
+            //string codigoActivacion = RandomString(7);
+            string codigoActivacion = "123456";
 
             int a = ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil,codigoActivacion);
 
@@ -481,7 +482,7 @@ namespace WebApiREST.Models
                     Data = Convert.ToString(a)
                 });
 
-                EnviarCodigoActivacion(codigoActivacion,movil);
+                //EnviarCodigoActivacion(codigoActivacion,movil);
             }
             else
             {
@@ -548,7 +549,7 @@ namespace WebApiREST.Models
         public static string RandomString(int length)
         {
             Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }

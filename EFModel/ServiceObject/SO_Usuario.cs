@@ -9,7 +9,7 @@ namespace EFModel.ServiceObject
 {
     public class SO_Usuario
     {
-        public TBL_USUARIO Login(string usuario, string pass)
+        public IList Login(string usuario, string pass)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace EFModel.ServiceObject
                 {
                     var elUsuario = (from tblUsuario in Conexion.TBL_USUARIO
                                      where tblUsuario.USUARIO == usuario && tblUsuario.PASSWORD == pass
-                                     select tblUsuario).ToList().FirstOrDefault();
+                                     select tblUsuario).ToList();
                     return elUsuario;
                 }
             }

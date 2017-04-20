@@ -23,6 +23,10 @@ namespace EFModel
         public int ID_USUARIO { get; set; }
         public string USUARIO { get; set; }
         public string PASSWORD { get; set; }
+        public string NOMBRE { get; set; }
+        public string APELLIDO_PATERNO { get; set; }
+        public string APELLIDO_MATERNO { get; set; }
+        public Nullable<System.DateTime> FECHA_NACIMIENTO { get; set; }
         public Nullable<System.DateTime> FECHA_CREACION { get; set; }
         public Nullable<int> ID_USUARIO_CREACION { get; set; }
         public Nullable<System.DateTime> FECHA_ACTUALIZACION { get; set; }

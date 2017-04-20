@@ -17,5 +17,12 @@ namespace WebApiREST.Controllers
             //5.-Asignado(Ya acepto el taxista)
             return Ok(DataManager.CambiarEstatusPedido(idPedido,idNegocio,estatus));
         }
+
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/Pedido/ObtenerPedidosUsuario/{idUsuarioAplicacion:int}")]
+        public IHttpActionResult ObtenerSolicitutesPorUsuario(int idUsuario)
+        {
+            return Ok(DataManager.GetPedidosUsuario(idUsuario));
+        }
     }
 }

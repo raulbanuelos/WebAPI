@@ -60,7 +60,10 @@ namespace WebApiREST.Models
             return lista;
         }
 
-        
+        internal static object GetPedidosUsuario(int idUsuario)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Método que busca los taxis cercas de una latitud y longitud enviada.
@@ -336,46 +339,62 @@ namespace WebApiREST.Models
         /// <param name="usuario"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static List<Negocio> GetLogin(string usuario, string pass)
+        public static User GetLogin(string usuario, string pass)
         {
             SO_Usuario ServicioUsuario = new SO_Usuario();
 
-            TBL_USUARIO InformacionBD = ServicioUsuario.Login(usuario, pass);
+            IList InformacionBD = ServicioUsuario.Login(usuario, pass);
+
+            User user = new User();
 
             if (InformacionBD != null)
             {
-                IList InformacionNegocioBD = ServicioUsuario.GetNegociosUsuario(usuario);
-                if (InformacionNegocioBD != null)
+                foreach (var item in InformacionBD)
                 {
-                    List<Negocio> ListaNegocios = new List<Negocio>();
-                    foreach (var negocio in InformacionNegocioBD)
-                    {
-                        System.Type tipo = negocio.GetType();
+                    System.Type tipoU = item.GetType();
 
-                        Negocio obj = new Negocio();
-                        obj.idNegocio = Convert.ToInt32(tipo.GetProperty("ID_NEGOCIO").GetValue(negocio, null));
-                        obj.Descripcion = Convert.ToString(tipo.GetProperty("DESCRIPCION").GetValue(negocio, null));
-                        obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
-                        obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));
-                        obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
-                        obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
-                        obj.Longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
-                        obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
-                        obj.Estatus = Convert.ToInt32(tipo.GetProperty("ESTATUS").GetValue(negocio, null));
-                        ListaNegocios.Add(obj);
+                    user.ID_USUARIO = Convert.ToInt32(tipoU.GetProperty("ID_USUARIO").GetValue(item,null));
+                    user.USUARIO = Convert.ToString(tipoU.GetProperty("USUARIO").GetValue(item, null));
+                    user.PASSWORD = Convert.ToString(tipoU.GetProperty("PASSWORD").GetValue(item, null));
+                    user.NOMBRE = Convert.ToString(tipoU.GetProperty("NOMBRE").GetValue(item,null));
+                    user.APELLIDO_PATERNO = Convert.ToString(tipoU.GetProperty("APELLIDO_PATERNO").GetValue(item, null));
+                    user.APELLIDO_MATERNO = Convert.ToString(tipoU.GetProperty("APELLIDO_MATERNO").GetValue(item, null));
+                    user.FECHA_NACIMIENTO = Convert.ToDateTime(tipoU.GetProperty("FECHA_NACIMIENTO").GetValue(item, null));
+
+                    IList InformacionNegocioBD = ServicioUsuario.GetNegociosUsuario(usuario);
+
+                    if (InformacionNegocioBD != null)
+                    {
+                        List<Negocio> ListaNegocios = new List<Negocio>();
+                        foreach (var negocio in InformacionNegocioBD)
+                        {
+                            System.Type tipo = negocio.GetType();
+
+                            Negocio obj = new Negocio();
+                            obj.idNegocio = Convert.ToInt32(tipo.GetProperty("ID_NEGOCIO").GetValue(negocio, null));
+                            obj.Descripcion = Convert.ToString(tipo.GetProperty("DESCRIPCION").GetValue(negocio, null));
+                            obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
+                            obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));
+                            obj.idCategoria = Convert.ToInt32(tipo.GetProperty("ID_SUB_CATEGORIA").GetValue(negocio, null));
+                            obj.Latitud = Convert.ToDouble(tipo.GetProperty("LATITUD").GetValue(negocio, null));
+                            obj.Longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
+                            obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
+                            obj.Estatus = Convert.ToInt32(tipo.GetProperty("ESTATUS").GetValue(negocio, null));
+
+                            user.negocio = obj;
+                        }
                     }
-                    return ListaNegocios;
-                }
-                else
-                {
-                    //Existe el usuario pero no tiene negocios registrrados.
-                    return null;
+                    else {
+                        //Existe el usuario pero no tiene negocios registrrados.
+                        return null;
+                    }
                 }
             }
             else {
                 //No se reconocieron las credenciales
                 return null;
             }
+            return user;
         }
 
 
@@ -466,8 +485,9 @@ namespace WebApiREST.Models
                 });
                 return lista;
             }
-            
-            string codigoActivacion = RandomString(7);
+
+            //string codigoActivacion = RandomString(7);
+            string codigoActivacion = "123456";
 
             int a = ServicioUsuario.SetUsuarioAplicacion(correo, pass, usuario, nombre, aPaterno, aMaterno, fechaNacimiento, movil,codigoActivacion);
 
@@ -481,7 +501,7 @@ namespace WebApiREST.Models
                     Data = Convert.ToString(a)
                 });
 
-                EnviarCodigoActivacion(codigoActivacion,movil);
+                //EnviarCodigoActivacion(codigoActivacion,movil);
             }
             else
             {
@@ -548,7 +568,7 @@ namespace WebApiREST.Models
         public static string RandomString(int length)
         {
             Random random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }

@@ -22,7 +22,7 @@ namespace EFModel
         public Nullable<System.DateTime> FECHA_ACTUALIZACION { get; set; }
         public Nullable<int> ID_USUARIO_ACTUALIZACION { get; set; }
     
-        public virtual TBL_USUARIO TBL_USUARIO { get; set; }
         public virtual CAT_NEGOCIO CAT_NEGOCIO { get; set; }
+        public virtual TBL_USUARIO TBL_USUARIO { get; set; }
     }
 }

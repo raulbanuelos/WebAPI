@@ -339,14 +339,16 @@ namespace WebApiREST.Models
         /// <param name="usuario"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static User GetLogin(string usuario, string pass)
+        public static List<User> GetLogin(string usuario, string pass)
         {
             SO_Usuario ServicioUsuario = new SO_Usuario();
 
+            IList InformacionBD = ServicioUsuario.Login(usuario, pass);
+
+            List<User> ListaResultante = new List<User>();
+
             User user = new User();
 
-            IList InformacionBD = ServicioUsuario.Login(usuario, pass);
-            
             if (InformacionBD != null)
             {
                 foreach (var item in InformacionBD)
@@ -382,6 +384,9 @@ namespace WebApiREST.Models
                             obj.Estatus = Convert.ToInt32(tipo.GetProperty("ESTATUS").GetValue(negocio, null));
 
                             user.negocio = obj;
+
+                            ListaResultante.Clear();
+                            ListaResultante.Add(user);
                         }
                     }
                     else {
@@ -394,7 +399,7 @@ namespace WebApiREST.Models
                 //No se reconocieron las credenciales
                 return null;
             }
-            return user;
+            return ListaResultante;
         }
 
 

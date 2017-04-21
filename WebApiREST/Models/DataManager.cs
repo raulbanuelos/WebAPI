@@ -343,10 +343,10 @@ namespace WebApiREST.Models
         {
             SO_Usuario ServicioUsuario = new SO_Usuario();
 
-            IList InformacionBD = ServicioUsuario.Login(usuario, pass);
-
             User user = new User();
 
+            IList InformacionBD = ServicioUsuario.Login(usuario, pass);
+            
             if (InformacionBD != null)
             {
                 foreach (var item in InformacionBD)

@@ -19,8 +19,8 @@ namespace WebApiREST.Controllers
         /// <param name="idCategoria"></param>
         /// <returns></returns>
         [System.Web.Http.AcceptVerbs("GET","POST")]
-        [Route("api/Negocio/{latitud:double}/{longitud:double}/{palabra}/{optional}")]
-        public IHttpActionResult GetNegocio(double latitud, double longitud,string palabra,string optional)
+        [Route("api/Negocio/GetTaxi/{latitud:double}/{longitud:double}/{palabra}")]
+        public IHttpActionResult GetNegocio(double latitud, double longitud,string palabra)
         {
             return Ok(DataManager.GetNegociosRelacionados(palabra, latitud, longitud));
         }

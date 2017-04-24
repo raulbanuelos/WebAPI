@@ -66,6 +66,35 @@ namespace WebApiREST.Models
         }
 
         /// <summary>
+        /// Método que obtiene la posición actual de un negocio a Partir del id del negocio.
+        /// </summary>
+        /// <param name="idNegocio">Entero que representa el id del negocio que se requiere saber su posición</param>
+        /// <returns>RequestPixie</returns>
+        public static RequestPixie GetUbicacionNegocio(int idNegocio)
+        {
+            SO_Negocio ServicioNegocio = new SO_Negocio();
+
+            IList InformacionBD = ServicioNegocio.GetUbicacionNegocio(idNegocio);
+
+            if (InformacionBD != null)
+            {
+                string ubicacion = "";
+                foreach (var item in InformacionBD)
+                {
+                    System.Type tipo = item.GetType();
+
+                    double latitud = (double)tipo.GetProperty("LATITUD").GetValue(item, null);
+                    double longitud = (double)tipo.GetProperty("LONGITUD").GetValue(item, null);
+                    ubicacion = latitud.ToString() + "," + longitud.ToString();
+                }
+                return new RequestPixie { IsSuccess = true, Code = 1, Message = "Actualizacion OK", Data = ubicacion };
+            }
+            else {
+                return new RequestPixie { IsSuccess = false, Code = 3, Message = "Se perdió la conexión" };
+            }
+        }
+
+        /// <summary>
         /// Método que busca los taxis cercas de una latitud y longitud enviada.
         /// </summary>
         /// <param name="latitud_actual">Double que representa la latitud de la persona.</param>

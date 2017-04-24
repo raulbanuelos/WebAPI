@@ -54,6 +54,39 @@ namespace EFModel.ServiceObject
         }
 
         /// <summary>
+        /// Método que obtiene la posición actual de un negocio.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
+        public IList GetUbicacionNegocio(int idNegocio)
+        {
+            try
+            {
+                //Realizamos la conexión a través de Entity Framework.
+                using (var Conexion = new BDEntities())
+                {
+
+                    //Realizamos la consulta.
+                    var ListaResultante = (from a in Conexion.CAT_NEGOCIO
+                                           where a.ID_NEGOCIO == idNegocio
+                                           select new
+                                           {
+                                               a.ID_NEGOCIO,
+                                               a.LATITUD,
+                                               a.LONGITUD
+                                           }).ToList();
+                    //Retornamos el resultado de la consulta.
+                    return ListaResultante;
+                }
+            }
+            catch (Exception)
+            {
+                //Si se generó algún error retornamos un nulo.
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Método que se utiliza para obtener todos los negocios.
         /// </summary>
         /// <returns>Lista anónima con la información de los negocios.Retorna un nulo si se generó algun error.</returns>

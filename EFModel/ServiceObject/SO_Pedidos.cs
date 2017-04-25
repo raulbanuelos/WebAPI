@@ -120,8 +120,7 @@ namespace EFModel.ServiceObject
                 using (var Conexion = new BDEntities())
                 {
                     PEDIDOS pedido = Conexion.PEDIDOS.Where(x => x.ID_PEDIDO == idPedido && x.ID_NEGOCIO_ASIGNADO == idNegocio).FirstOrDefault();
-
-                    //Asignamos el estatus #5 que representa el estatus aceptado
+                    
                     pedido.ESTATUS = estatus;
 
                     return Conexion.SaveChanges();

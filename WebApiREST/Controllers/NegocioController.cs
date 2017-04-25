@@ -102,5 +102,12 @@ namespace WebApiREST.Controllers
         {
             return Ok(DataManager.GetPedidosAsignados(idNegocio));
         }
+
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/Negocio/AceptarPedido/{idNegocio:int}/{idPedido:int}")]
+        public IHttpActionResult SetAceptarPedido(int idNegocio, int idPedido)
+        {
+            return Ok(DataManager.SetAceptarPedido(idNegocio,idPedido));
+        }
     }
 }

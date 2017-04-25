@@ -275,6 +275,21 @@ namespace WebApiREST.Models
 
         }
 
+        public static RequestPixie SetAceptarPedido(int idNegocio, int idPedido)
+        {
+            SO_Pedidos ServicioPedido = new SO_Pedidos();
+
+            int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido, 5);
+
+            if (r > 0)
+            {
+                return new RequestPixie { IsSuccess = true, Code = 1, Data = r.ToString(), Message = "Aceptaste el servicio" };
+            }
+            else {
+                return new RequestPixie { IsSuccess = false, Code = 3, Data = null, Message = "Error al aceptar el servicio" };
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -306,7 +321,6 @@ namespace WebApiREST.Models
                     Data = string.Empty
                 };
             }
-           
         }
 
         public static RequestPixie GetPedidosAsignados(int idNegocio)

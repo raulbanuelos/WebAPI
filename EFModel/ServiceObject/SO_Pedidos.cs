@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -122,6 +123,62 @@ namespace EFModel.ServiceObject
                     PEDIDOS pedido = Conexion.PEDIDOS.Where(x => x.ID_PEDIDO == idPedido && x.ID_NEGOCIO_ASIGNADO == idNegocio).FirstOrDefault();
                     
                     pedido.ESTATUS = estatus;
+
+                    return Conexion.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Método que actualiza la fecha final de un pedido.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        public int SetFechaFinalPedido(int idNegocio, int idPedido,double latitudDestino, double longitudDestino)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    PEDIDOS pedido = Conexion.PEDIDOS.Where(x => x.ID_PEDIDO == idPedido && x.ID_NEGOCIO_ASIGNADO == idNegocio).FirstOrDefault();
+
+                    pedido.FECHA_FINAL = DateTime.Now;
+                    pedido.LATITUD_DESTINO = latitudDestino;
+                    pedido.LONGITUD_DESTINO = longitudDestino;
+
+                    Conexion.Entry(pedido).State = EntityState.Modified;
+
+                    return Conexion.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Método que actualiza la fecha inicial del pedido.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        public int SetFechaInicialPedido(int idNegocio, int idPedido)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    PEDIDOS pedido = Conexion.PEDIDOS.Where(x => x.ID_PEDIDO == idPedido && x.ID_NEGOCIO_ASIGNADO == idNegocio).FirstOrDefault();
+
+                    pedido.FECHA_INICIAL = DateTime.Now;
+
+                    Conexion.Entry(pedido).State = EntityState.Modified;
 
                     return Conexion.SaveChanges();
                 }

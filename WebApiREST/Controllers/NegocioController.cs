@@ -107,7 +107,21 @@ namespace WebApiREST.Controllers
         [Route("api/Negocio/AceptarPedido/{idNegocio:int}/{idPedido:int}")]
         public IHttpActionResult SetAceptarPedido(int idNegocio, int idPedido)
         {
-            return Ok(DataManager.SetAceptarPedido(idNegocio,idPedido));
+            return Ok(DataManager.SetAceptarServicio(idNegocio,idPedido));
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/Negocio/IniciarServicio/{idNegocio:int}/{idPedido:int}")]
+        public IHttpActionResult SetIniciarServicio(int idNegocio, int idPedido)
+        {
+            return Ok(DataManager.SetIniciarServicio(idNegocio, idPedido));
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/Negocio/TerminarPedido/{latitud:double}/{longitud:double}/{idNegocio:int}/{idPedido:int}")]
+        public IHttpActionResult SetTerminarPedido(double latitud, double longitud,int idNegocio, int idPedido)
+        {
+            return Ok(DataManager.SetTerminarPedido(idNegocio,idPedido,latitud,longitud));
         }
     }
 }

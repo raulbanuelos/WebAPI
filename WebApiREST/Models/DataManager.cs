@@ -275,18 +275,119 @@ namespace WebApiREST.Models
 
         }
 
-        public static RequestPixie SetAceptarPedido(int idNegocio, int idPedido)
+        /// <summary>
+        /// Método que acepta el servicio por parte del negocio.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        public static RequestPixie SetAceptarServicio(int idNegocio, int idPedido)
         {
             SO_Pedidos ServicioPedido = new SO_Pedidos();
-
+            
             int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido, 5);
 
             if (r > 0)
             {
-                return new RequestPixie { IsSuccess = true, Code = 1, Data = r.ToString(), Message = "Aceptaste el servicio" };
+                SO_Negocio ServicioNegocio = new SO_Negocio();
+
+                int r2 =ServicioNegocio.SetCambiarEstatus(idNegocio, 2);
+
+                if (r2 > 0)
+                {
+                    return new RequestPixie { IsSuccess = true, Code = 1, Data = r2.ToString(), Message = "Aceptaste el servicio" };
+                }
+                else
+                {
+                    return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al actualizar el estado del negocio" };
+                }
+                
             }
             else {
                 return new RequestPixie { IsSuccess = false, Code = 3, Data = null, Message = "Error al aceptar el servicio" };
+            }
+        }
+
+        /// <summary>
+        /// Método que inicializa el servicio.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        public static RequestPixie SetIniciarServicio(int idNegocio, int idPedido)
+        {
+            SO_Pedidos ServicioPedido = new SO_Pedidos();
+
+            int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido, 1);
+
+            if (r > 0)
+            {
+                int r2 = ServicioPedido.SetFechaInicialPedido(idNegocio, idPedido);
+
+                if (r2 > 0)
+                {
+                    SO_Negocio ServicioNegocio = new SO_Negocio();
+
+                    int r3 = ServicioNegocio.SetCambiarEstatus(idNegocio, 3);
+
+                    if (r3 > 0)
+                    {
+                        return new RequestPixie { IsSuccess = true, Code = 1, Data = r3.ToString(), Message = "Se ha iniciado el servicio" };
+                    }
+                    else
+                    {
+                        return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al actualizar el estado del negocio" };
+                    }
+                }
+                else
+                {
+                    return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al actualizar la fecha inicial del pedido." };
+                }
+            }
+            else
+            {
+                return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al actualizar el estatus del pedido." };
+            }
+        }
+
+        /// <summary>
+        /// Método que termina el pedido.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        public static RequestPixie SetTerminarPedido(int idNegocio, int idPedido, double latitudFinal, double longitudFinal)
+        {
+            SO_Pedidos ServicioPedido = new SO_Pedidos();
+
+            int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido, 3);
+
+            if (r > 0)
+            {
+                SO_Negocio ServicioNegocio = new SO_Negocio();
+
+                int r2 = ServicioNegocio.SetCambiarEstatus(idNegocio, 1);
+
+                if (r2 > 0)
+                {
+                    int r3 = ServicioPedido.SetFechaFinalPedido(idNegocio, idPedido,latitudFinal,longitudFinal);
+
+                    if (r3 > 0)
+                    {
+                        return new RequestPixie { IsSuccess = true, Code = 1, Data = r2.ToString(), Message = "Terminaste servicio." };
+                    }
+                    else
+                    {
+                        return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al terminar tu servicio." };
+                    }
+                }
+                else
+                {
+                    return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al terminar tu servicio." };
+                }
+            }
+            else {
+                return new RequestPixie { IsSuccess = false, Code = 3, Data = null, Message = "Error al terminar el servicio" };
             }
         }
 

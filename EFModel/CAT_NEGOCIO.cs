@@ -17,10 +17,10 @@ namespace EFModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CAT_NEGOCIO()
         {
-            this.PEDIDOS = new HashSet<PEDIDOS>();
             this.TBL_CALIFICACION_NEGOCIO = new HashSet<TBL_CALIFICACION_NEGOCIO>();
             this.TBL_RELACIION = new HashSet<TBL_RELACIION>();
             this.TR_USUARIO_NEGOCIO = new HashSet<TR_USUARIO_NEGOCIO>();
+            this.PEDIDOS = new HashSet<PEDIDOS>();
         }
     
         public int ID_NEGOCIO { get; set; }
@@ -39,12 +39,12 @@ namespace EFModel
         public Nullable<int> ESTATUS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PEDIDOS> PEDIDOS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TBL_CALIFICACION_NEGOCIO> TBL_CALIFICACION_NEGOCIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TBL_RELACIION> TBL_RELACIION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TR_USUARIO_NEGOCIO> TR_USUARIO_NEGOCIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PEDIDOS> PEDIDOS { get; set; }
     }
 }

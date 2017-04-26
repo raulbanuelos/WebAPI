@@ -21,7 +21,7 @@ namespace WebApiREST.Models
 
         public DateTime FECHA_NACIMIENTO { get; set; }
 
-        public Negocio negocio { get; set; }
+        public Negocio Negocios { get; set; }
 
     }
 }

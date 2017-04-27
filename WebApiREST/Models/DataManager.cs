@@ -527,7 +527,7 @@ namespace WebApiREST.Models
                             obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
                             obj.Estatus = Convert.ToInt32(tipo.GetProperty("ESTATUS").GetValue(negocio, null));
 
-                            user.Negocios = obj;
+                            user.Negocio = obj;
 
                             ListaResultante.Clear();
                             ListaResultante.Add(user);

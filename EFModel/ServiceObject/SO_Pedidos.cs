@@ -127,7 +127,7 @@ namespace EFModel.ServiceObject
                     return Conexion.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch (Exception er)
             {
                 return 0;
             }

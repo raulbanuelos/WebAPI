@@ -844,7 +844,8 @@ namespace WebApiREST.Models
                 aceptado = false;
 
                 //Mientras se ejetute el while, sera el tiempo que estará la alerta en la aplicación del operador.
-                while (tiempoInicial <= tiempoFinal && !aceptado)
+                //while (tiempoInicial <= tiempoFinal && !aceptado)
+                while (!aceptado)
                 {
                     //Esperamos 1 segundo.
                     RespiroSistema(1);

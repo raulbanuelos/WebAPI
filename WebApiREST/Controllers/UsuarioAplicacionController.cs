@@ -43,14 +43,16 @@ namespace WebApiREST.Controllers
         {
             return Ok(DataManager.VerificarCodigo(idUsuario, codigo));
         }
-
-
+        
         [AcceptVerbs("GET", "POST")]
         [Route("api/UsuarioAplicacion/GetUbicacionNegocio/{idNegocio:int}")]
         public IHttpActionResult GetUbicacionNegocio(int idNegocio)
         {
-            return Ok(DataManager.GetUbicacionNegocio(idNegocio));
-        }
+            List<RequestPixie> Lista = new List<RequestPixie>();
 
+            Lista.Add((DataManager.GetUbicacionNegocio(idNegocio)));
+
+            return Ok(Lista);
+        }
     }
 }

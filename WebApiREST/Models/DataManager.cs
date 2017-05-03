@@ -518,6 +518,7 @@ namespace WebApiREST.Models
 
                             Negocio obj = new Negocio();
                             obj.idNegocio = Convert.ToInt32(tipo.GetProperty("ID_NEGOCIO").GetValue(negocio, null));
+                            user.IdNegocio = obj.idNegocio;
                             obj.Descripcion = Convert.ToString(tipo.GetProperty("DESCRIPCION").GetValue(negocio, null));
                             obj.Titulo = Convert.ToString(tipo.GetProperty("NOMBRE").GetValue(negocio, null));
                             obj.Horario = Convert.ToString(tipo.GetProperty("HORARIOS").GetValue(negocio, null));

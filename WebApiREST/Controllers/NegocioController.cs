@@ -80,7 +80,11 @@ namespace WebApiREST.Controllers
         [Route("api/Negocio/ActualizaPosicion/{latitud:double}/{longitud:double}/{idNegocio:int}")]
         public IHttpActionResult SetPositionNegocio(double latitud, double longitud, int idNegocio)
         {
-            return Ok(DataManager.SetPositionNegocio(latitud, longitud, idNegocio));
+            RequestPixie obj = new RequestPixie();
+            obj = DataManager.SetPositionNegocio(latitud, longitud, idNegocio);
+            List<RequestPixie> Lista = new List<RequestPixie>();
+            Lista.Add(obj);
+            return Ok(Lista);
         }
 
         /// <summary>
@@ -107,7 +111,9 @@ namespace WebApiREST.Controllers
         [Route("api/Negocio/AceptarPedido/{idNegocio:int}/{idPedido:int}")]
         public IHttpActionResult SetAceptarPedido(int idNegocio, int idPedido)
         {
-            return Ok(DataManager.SetAceptarServicio(idNegocio,idPedido));
+            List<RequestPixie> lista = new List<RequestPixie>();
+            lista.Add(DataManager.SetAceptarServicio(idNegocio, idPedido));
+            return Ok(lista);
         }
 
         [AcceptVerbs("GET", "POST")]

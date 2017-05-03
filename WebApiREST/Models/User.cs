@@ -29,7 +29,9 @@ namespace WebApiREST.Models
         
         public DateTime FECHA_NACIMIENTO { get; set; }
 
-        
+        public int IdNegocio { get; set; }
+
+
         public Negocio Negocio { get; set; }
 
     }

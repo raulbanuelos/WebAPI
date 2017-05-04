@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace WebApiREST.Controllers
 {
     public class UsuarioController : ApiController
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         public IHttpActionResult Login(string usuario, string pass)
         {
             return Ok();

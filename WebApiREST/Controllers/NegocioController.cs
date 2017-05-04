@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using WebApiREST.Models;
-using EFModel;
-using EFModel.ServiceObject;
 namespace WebApiREST.Controllers
 {
     public class NegocioController : ApiController
@@ -104,6 +98,11 @@ namespace WebApiREST.Controllers
             return Ok(lista);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/Negocio/VerificarPedidosAsignados/{idNegocio:int}")]
         public IHttpActionResult GetPermisosAsignados(int idNegocio)
@@ -111,6 +110,12 @@ namespace WebApiREST.Controllers
             return Ok(DataManager.GetPedidosAsignados(idNegocio));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/Negocio/AceptarPedido/{idNegocio:int}/{idPedido:int}")]
         public IHttpActionResult SetAceptarPedido(int idNegocio, int idPedido)
@@ -120,6 +125,12 @@ namespace WebApiREST.Controllers
             return Ok(lista);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/Negocio/IniciarServicio/{idNegocio:int}/{idPedido:int}")]
         public IHttpActionResult SetIniciarServicio(int idNegocio, int idPedido)
@@ -129,6 +140,14 @@ namespace WebApiREST.Controllers
             return Ok(lista);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="latitud"></param>
+        /// <param name="longitud"></param>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/Negocio/TerminarPedido/{latitud:double}/{longitud:double}/{idNegocio:int}/{idPedido:int}")]
         public IHttpActionResult SetTerminarPedido(double latitud, double longitud,int idNegocio, int idPedido)

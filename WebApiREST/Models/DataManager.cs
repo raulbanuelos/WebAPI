@@ -60,6 +60,11 @@ namespace WebApiREST.Models
             return lista;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
         internal static object GetPedidosUsuario(int idUsuario)
         {
             throw new NotImplementedException();
@@ -72,24 +77,38 @@ namespace WebApiREST.Models
         /// <returns>RequestPixie</returns>
         public static RequestPixie GetUbicacionNegocio(int idNegocio)
         {
+            //Inicializamos los servicios de Negocio.
             SO_Negocio ServicioNegocio = new SO_Negocio();
 
+            //Eujecutamos el método para obtener la ubicación. El resultado lo guardamos en una lista anónima.
             IList InformacionBD = ServicioNegocio.GetUbicacionNegocio(idNegocio);
 
+            //Verificamos que el resultado de la consulta sea diferente de nulo.
             if (InformacionBD != null)
             {
+                //Declaramos una cadena que nos servira para guardar la ubicación del negocio.
                 string ubicacion = "";
+
+                //Iteramos la lista.
                 foreach (var item in InformacionBD)
                 {
+                    //Obtenermos el tipo del elemento.
                     System.Type tipo = item.GetType();
 
+                    //Obtenemos los valores.
                     double latitud = (double)tipo.GetProperty("LATITUD").GetValue(item, null);
                     double longitud = (double)tipo.GetProperty("LONGITUD").GetValue(item, null);
+
+                    //Concatenamos los valores de latitud y longitud separados por una coma-
                     ubicacion = latitud.ToString() + "," + longitud.ToString();
                 }
+
+                //Retornamos un objeto con el Request correspondiente.
                 return new RequestPixie { IsSuccess = true, Code = 1, Message = "Actualizacion OK", Data = ubicacion };
             }
-            else {
+            else
+            {
+                //Retornamos un objeto con el Request correspondiente.
                 return new RequestPixie { IsSuccess = false, Code = 3, Message = "Se perdió la conexión" };
             }
         }
@@ -424,6 +443,11 @@ namespace WebApiREST.Models
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         public static RequestPixie GetPedidosAsignados(int idNegocio)
         {
             SO_Pedidos ServicioPedido = new SO_Pedidos();
@@ -559,7 +583,12 @@ namespace WebApiREST.Models
             return new RequestPixie { Code = 3, IsSuccess = true, Message = "Usuario y/o contraseña no reconocidos" };
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <param name="codigo"></param>
+        /// <returns></returns>
         public static List<RequestPixie> VerificarCodigo(int idUsuario, string codigo)
         {
             List<RequestPixie> ListaResultante = new List<RequestPixie>();
@@ -680,6 +709,11 @@ namespace WebApiREST.Models
             return lista;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="codigoActivacion"></param>
+        /// <param name="movil"></param>
         private static void EnviarCodigoActivacion(string codigoActivacion,string movil)
         {
             HttpClient client = new HttpClient();
@@ -727,6 +761,11 @@ namespace WebApiREST.Models
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static string RandomString(int length)
         {
             Random random = new Random();
@@ -735,6 +774,15 @@ namespace WebApiREST.Models
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="longitudInicial"></param>
+        /// <param name="latitudInicial"></param>
+        /// <param name="longitudDestino"></param>
+        /// <param name="latitudDestino"></param>
+        /// <param name="idUsuarioAplicacion"></param>
+        /// <returns></returns>
         public static Negocio GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)
         {
             //Declaramos los servicios que utilizaremos en el método.
@@ -896,6 +944,10 @@ namespace WebApiREST.Models
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nSecs"></param>
         public static void RespiroSistema(double nSecs)
         {
             // Esperar los segundos indicados
@@ -922,6 +974,12 @@ namespace WebApiREST.Models
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="correo"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         public static List<UsuarioAplicacion> LoginUsuarioAplicacion(string correo, string pass)
         {
             SO_Usuario_Aplicacion ServiceObject = new SO_Usuario_Aplicacion();

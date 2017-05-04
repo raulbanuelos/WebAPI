@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using WebApiREST.Models;
 
 namespace WebApiREST.Controllers
 {
     public class NegocioEstatusController : ApiController
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="estatus"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/NegocioEstatus/{idNegocio:int}/{estatus:int}/")]
         public IHttpActionResult CambiarEstatusNegocio(int idNegocio, int estatus)

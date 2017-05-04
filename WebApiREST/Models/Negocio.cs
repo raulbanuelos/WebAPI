@@ -1,10 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebApiREST.Models
+﻿namespace WebApiREST.Models
 {
     public class Negocio
     {
@@ -32,15 +26,14 @@ namespace WebApiREST.Models
        
         public string Telefono { get; set; }
 
-        public bool IsActivo { get; set; }
 
+        public bool IsActivo { get; set; }
 
         /// <summary>
         /// Double que representa la distancia entre el negocio y el usuario.
         /// </summary>
         public double Distancia { get; set; }
 
-        
         /// <summary>
         /// Entero que representa el estatus del negocio
         /// 1.-Libre

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using WebApiREST.Models;
@@ -21,6 +20,15 @@ namespace WebApiREST.Controllers
             return Ok(DataManager.SetUsuarioAplicacion(correo, pass,usuario,nombre,aPaterno,aMaterno,Convert.ToDateTime(fechaNacimiento),movil));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="latitudInicial"></param>
+        /// <param name="longitudInicial"></param>
+        /// <param name="latitudDestino"></param>
+        /// <param name="longitudDestino"></param>
+        /// <param name="idUsuarioAplicacion"></param>
+        /// <returns></returns>
         [Route("api/UsuarioAplicacion/{latitudInicial:double}/{longitudInicial:double}/{latitudDestino:double}/{longitudDestino:double}/{idUsuarioAplicacion:int}")]
         public IHttpActionResult GetTaxi(double latitudInicial,double longitudInicial,double latitudDestino,double longitudDestino, int idUsuarioAplicacion)
         {
@@ -30,6 +38,12 @@ namespace WebApiREST.Controllers
             return Ok(lista);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="correo"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/UsuarioAplicacion/{correo}/{pass}")]
         public IHttpActionResult LoginUsuarioAplication(string correo, string pass)
@@ -37,6 +51,12 @@ namespace WebApiREST.Controllers
             return Ok(DataManager.LoginUsuarioAplicacion(correo, pass));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <param name="codigo"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/UsuarioAplicacion/VerificaCodigo/{idUsuario:int}/{codigo}")]
         public IHttpActionResult VerificaCodigo(int idUsuario, string codigo)
@@ -44,6 +64,11 @@ namespace WebApiREST.Controllers
             return Ok(DataManager.VerificarCodigo(idUsuario, codigo));
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/UsuarioAplicacion/GetUbicacionNegocio/{idNegocio:int}")]
         public IHttpActionResult GetUbicacionNegocio(int idNegocio)

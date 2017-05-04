@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace WebApiREST.Models
 {
@@ -28,6 +24,7 @@ namespace WebApiREST.Models
 
         
         public DateTime FECHA_NACIMIENTO { get; set; }
+
 
         public int IdNegocio { get; set; }
 

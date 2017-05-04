@@ -119,40 +119,61 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// Método que verifica que el código de activación sea igual al enviado en el parámetro.
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <param name="codigo"></param>
+        /// <returns></returns>
         public object ChecarCodigo(int idUsuario, string codigo)
         {
             try
             {
+                //Inicializamos la conexión a través de EntityFramework
                 using (var Conexion = new BDEntities())
                 {
+                    //Realizamos la consulta con la condición de id de usuario y el código de activación. El resultado lo guardamos en una variable anónima.
                     var obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.ID_USUARIO_APLICACION.Equals(idUsuario) && x.CODIGO_ACTIVACION.Equals(codigo)).FirstOrDefault();
 
+                    //Verificamos si el resultado es direfente de nulo para retornar un true, sino enviamos un false.
                     return obj != null ? true : false;
                 }
             }
             catch (Exception)
             {
+                //Si ocurre un error retornamos un nulo.
                 return null;
             }
         }
 
-        public object ActivarCuenta(int idCodigo)
+        /// <summary>
+        /// Método que activa el registro del usuario.
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
+        public object ActivarCuenta(int idUsuario)
         {
             try
             {
+                //Incializamos la conexión a través de EntityFramework.
                 using (var Conexion = new BDEntities())
                 {
-                    CAT_USUARIO_APLICACION obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.ID_USUARIO_APLICACION.Equals(idCodigo)).FirstOrDefault();
+                    //Realizamos la consulta en la cual buscamos obtener un registro de un usuario a partir del id del usuario. El resultado lo guardamos en una variable local.
+                    CAT_USUARIO_APLICACION obj = Conexion.CAT_USUARIO_APLICACION.Where(x => x.ID_USUARIO_APLICACION.Equals(idUsuario)).FirstOrDefault();
 
+                    //Cambiamos el valor de la propiedad IS_ACTIVO.
                     obj.IS_ACTIVO = true;
                     
+                    //Indicamos el estatus del registro a modificado.
                     Conexion.Entry(obj).State = EntityState.Modified;
 
+                    //Ejecutamos el método para guardar los cambios, retornamos el resultado el cual nos indica el número de registros afectados.
                     return Conexion.SaveChanges();
                 }
             }
             catch (Exception)
             {
+                //Si ocurre algún error retornamos un nulo.
                 return null;
             }
         }

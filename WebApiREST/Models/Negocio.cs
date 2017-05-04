@@ -29,6 +29,9 @@
 
         public bool IsActivo { get; set; }
 
+
+        public double Calificacion { get; set; }
+
         /// <summary>
         /// Double que representa la distancia entre el negocio y el usuario.
         /// </summary>

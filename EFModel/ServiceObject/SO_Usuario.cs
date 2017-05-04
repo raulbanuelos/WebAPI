@@ -6,6 +6,12 @@ namespace EFModel.ServiceObject
 {
     public class SO_Usuario
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
         public IList Login(string usuario, string pass)
         {
             try
@@ -59,6 +65,36 @@ namespace EFModel.ServiceObject
             catch (Exception)
             {
                 //Resgistrar el error
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Método que obtiene el usuario que corresponde a un negocio.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
+        public IList GetUsuarioNegocio(int idNegocio)
+        {
+            try
+            {
+                //Inicializamos la conexión a la base de datos a través de EntityFramework.
+                using (var Conexion = new BDEntities())
+                {
+                    //Realizamos la consulta. El resultado lo guardamos en una variable anónima.
+                    var Lista = (from a in Conexion.CAT_NEGOCIO
+                                 join r in Conexion.TR_USUARIO_NEGOCIO on a.ID_NEGOCIO equals r.ID_NEGOCIO
+                                 join u in Conexion.TBL_USUARIO on r.ID_USUARIO equals u.ID_USUARIO
+                                 where a.ID_NEGOCIO == idNegocio
+                                 select u).ToList();
+
+                    //Retornamos el resultado de la consulta.
+                    return Lista;
+                }
+            }
+            catch (Exception)
+            {
+                //Si ocurre algún error, retornamos un nulo.
                 return null;
             }
         }

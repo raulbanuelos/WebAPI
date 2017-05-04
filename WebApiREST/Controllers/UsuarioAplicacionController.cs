@@ -32,10 +32,11 @@ namespace WebApiREST.Controllers
         [Route("api/UsuarioAplicacion/{latitudInicial:double}/{longitudInicial:double}/{latitudDestino:double}/{longitudDestino:double}/{idUsuarioAplicacion:int}")]
         public IHttpActionResult GetTaxi(double latitudInicial,double longitudInicial,double latitudDestino,double longitudDestino, int idUsuarioAplicacion)
         {
-            Negocio obj = DataManager.GetAuto(longitudInicial, latitudInicial,longitudDestino,latitudDestino, idUsuarioAplicacion);
-            List<Negocio> lista = new List<Negocio>();
-            lista.Add(obj);
-            return Ok(lista);
+            List<RequestPixie> Lista = new List<RequestPixie>();
+
+            Lista.Add(DataManager.GetAuto(longitudInicial, latitudInicial, longitudDestino, latitudDestino, idUsuarioAplicacion));
+            
+            return Ok(Lista);
         }
 
         /// <summary>

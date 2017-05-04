@@ -783,11 +783,12 @@ namespace WebApiREST.Models
         /// <param name="latitudDestino"></param>
         /// <param name="idUsuarioAplicacion"></param>
         /// <returns></returns>
-        public static Negocio GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)
+        public static RequestPixie GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)
         {
             //Declaramos los servicios que utilizaremos en el método.
             SO_Negocio ServicioNegocio = new SO_Negocio();
             SO_Pedidos ServicioPedido = new SO_Pedidos();
+            SO_Usuario ServicioUsuario = new SO_Usuario();
 
             //Declaramos una lista de tipo Negocios que será la que contendrá los candidatos a responder al cliente.
             List<Negocio> ListaNegocio = new List<Negocio>();
@@ -934,14 +935,68 @@ namespace WebApiREST.Models
 
             //Verificamos si el servicio fué aceptado y nos aseguramos que el objeto de negocioResponde sea distinto de nulo.
             if (aceptado && negocioResponde != null)
+            {
+                IList ListaUsuario = ServicioUsuario.GetUsuarioNegocio(negocioResponde.idNegocio);
 
-                //Retornamos el objeto de negocioResponde.
-                return negocioResponde;
+                negocioResponde.Calificacion = GetPromedioCalificacion(negocioResponde.idNegocio);
+
+                if (ListaUsuario != null)
+                {
+                    User usuario = new User();
+                    foreach (var item in ListaUsuario)
+                    {
+                        System.Type tipo = item.GetType();
+
+                        usuario = new User();
+                        usuario.NOMBRE = (string)tipo.GetProperty("NOMBRE").GetValue(item, null);
+                        usuario.APELLIDO_PATERNO = (string)tipo.GetProperty("APELLIDO_PATERNO").GetValue(item, null);
+                        usuario.APELLIDO_MATERNO = (string)tipo.GetProperty("APELLIDO_MATERNO").GetValue(item, null);
+                        usuario.Negocio = negocioResponde;
+                        usuario.IdNegocio = negocioResponde.idNegocio;
+
+                    }
+                    return new RequestPixie { Code = 1, Data = usuario, Message = "", IsSuccess = true };
+                }
+                else
+                {
+                    return new RequestPixie { Code = 3, Message = "Error al asignar un negocio", IsSuccess = false };
+                }
+            }
             else
+            {
+                return new RequestPixie { Code = 3, Message = "Error al asignar un negocio", IsSuccess = false };
 
-                //Retornamos un nulo.
-                return null;
+            }
+        }
 
+        public static double GetPromedioCalificacion(int idNegocio)
+        {
+            SO_Calificacion ServicioCalificacion = new SO_Calificacion();
+
+            IList InformacionBD = ServicioCalificacion.GetCalificacionNegocio(idNegocio);
+
+            List<double> ListaCalificaciones = new List<double>();
+
+            if (InformacionBD != null)
+            {
+                foreach (var item in InformacionBD)
+                {
+                    System.Type tipo = item.GetType();
+
+                    double calificacion = (double)tipo.GetProperty("CALIFICACION").GetValue(item, null);
+                    ListaCalificaciones.Add(calificacion);
+                }
+
+                double sumaCalificaciones = 0;
+                foreach (double item in ListaCalificaciones)
+                {
+                    sumaCalificaciones += item;
+                }
+
+                return sumaCalificaciones / ListaCalificaciones.Count;
+            }
+
+            return 0;
         }
 
         /// <summary>

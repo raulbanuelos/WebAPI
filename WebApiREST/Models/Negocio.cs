@@ -32,7 +32,9 @@ namespace WebApiREST.Models
        
         public string Telefono { get; set; }
 
-        
+        public bool IsActivo { get; set; }
+
+
         /// <summary>
         /// Double que representa la distancia entre el negocio y el usuario.
         /// </summary>

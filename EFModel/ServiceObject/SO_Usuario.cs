@@ -54,6 +54,7 @@ namespace EFModel.ServiceObject
                                      c.TELEFONO,
                                      s.ID_SUB_CATEGORIA,
                                      c.ESTATUS,
+                                     c.IS_ACTIVO
                                  }).ToList();
                     return Lista;
                 }

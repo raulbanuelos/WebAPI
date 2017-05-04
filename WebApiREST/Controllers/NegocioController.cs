@@ -97,7 +97,11 @@ namespace WebApiREST.Controllers
         [Route("api/Negocio/{usuario}/{contrasena}")]
         public IHttpActionResult LoginNegocio(string usuario, string contrasena)
         {
-            return Ok(DataManager.GetLogin(usuario, contrasena));
+            List<RequestPixie> lista = new List<RequestPixie>();
+
+            lista.Add(DataManager.GetLogin(usuario, contrasena));
+
+            return Ok(lista);
         }
 
         [AcceptVerbs("GET", "POST")]

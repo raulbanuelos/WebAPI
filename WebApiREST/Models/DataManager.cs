@@ -478,12 +478,12 @@ namespace WebApiREST.Models
         }
 
         /// <summary>
-        /// 
+        /// Método que permite el inicio de sessión por parte del negocio.
         /// </summary>
         /// <param name="usuario"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static List<User> GetLogin(string usuario, string pass)
+        public static RequestPixie GetLogin(string usuario, string pass)
         {
             SO_Usuario ServicioUsuario = new SO_Usuario();
 
@@ -506,7 +506,7 @@ namespace WebApiREST.Models
                     user.APELLIDO_PATERNO = Convert.ToString(tipoU.GetProperty("APELLIDO_PATERNO").GetValue(item, null));
                     user.APELLIDO_MATERNO = Convert.ToString(tipoU.GetProperty("APELLIDO_MATERNO").GetValue(item, null));
                     user.FECHA_NACIMIENTO = Convert.ToDateTime(tipoU.GetProperty("FECHA_NACIMIENTO").GetValue(item, null));
-
+                    
                     IList InformacionNegocioBD = ServicioUsuario.GetNegociosUsuario(usuario);
 
                     if (InformacionNegocioBD != null)
@@ -527,24 +527,36 @@ namespace WebApiREST.Models
                             obj.Longitud = Convert.ToDouble(tipo.GetProperty("LONGITUD").GetValue(negocio, null));
                             obj.Telefono = Convert.ToString(tipo.GetProperty("TELEFONO").GetValue(negocio, null));
                             obj.Estatus = Convert.ToInt32(tipo.GetProperty("ESTATUS").GetValue(negocio, null));
-
+                            obj.IsActivo = Convert.ToBoolean(tipo.GetProperty("IS_ACTIVO").GetValue(negocio, null));
                             user.Negocio = obj;
-
                             ListaResultante.Clear();
                             ListaResultante.Add(user);
                         }
+                        int negociosActivados = ListaResultante.Where(x => x.Negocio.IsActivo).ToList().Count;
+                        if (negociosActivados > 0)
+                        {
+                            return new RequestPixie { Code = 1, IsSuccess = true, Message = "Bienvenido!", Data = ListaResultante };
+                        }
+                        else
+                        {
+                            return new RequestPixie { Code = 2, IsSuccess = true, Message = "Tu negocio no esta activo" };
+                        }
                     }
-                    else {
+                    else
+                    {
                         //Existe el usuario pero no tiene negocios registrrados.
-                        return null;
+                        return new RequestPixie { Code = 2, IsSuccess = true, Message = "Tu usuario no tiene negocios registrados" };
                     }
                 }
             }
-            else {
+            else
+            {
                 //No se reconocieron las credenciales
-                return null;
+                return new RequestPixie { Code = 3, IsSuccess = true, Message = "Usuario y/o contraseña no reconocidos" };
             }
-            return ListaResultante;
+
+            //No se reconocieron las credenciales
+            return new RequestPixie { Code = 3, IsSuccess = true, Message = "Usuario y/o contraseña no reconocidos" };
         }
 
 

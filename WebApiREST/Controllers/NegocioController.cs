@@ -107,7 +107,11 @@ namespace WebApiREST.Controllers
         [Route("api/Negocio/VerificarPedidosAsignados/{idNegocio:int}")]
         public IHttpActionResult GetPermisosAsignados(int idNegocio)
         {
-            return Ok(DataManager.GetPedidosAsignados(idNegocio));
+            List<RequestPixie> lista = new List<RequestPixie>();
+
+            lista.Add(DataManager.GetPedidosAsignados(idNegocio));
+
+            return Ok(lista);
         }
 
         /// <summary>

@@ -93,43 +93,61 @@ namespace EFModel.ServiceObject
             }
         }
 
+        /// <summary>
+        /// Método que verifica si un negocio a recibido un pedido.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         public int GetPedidoAsignadoPorNegocio(int idNegocio)
         {
             try
             {
+                //Establecemos la conexión a través de EntityFramework.
                 using (var Conexion = new BDEntities())
                 {
-                    var resultado = (from p in Conexion.PEDIDOS
+                    //Realizamos la consulta y el resultado lo guardamos en una variable local.
+                    int resultado = (from p in Conexion.PEDIDOS
                                      where p.ID_NEGOCIO_ASIGNADO == idNegocio && p.ESTATUS == 6
-                                     select new
-                                     {
-                                         p.ID_PEDIDO
-                                     }).FirstOrDefault();
+                                     select p.ID_PEDIDO).FirstOrDefault();
 
-                    return Convert.ToInt32(resultado);
+                    //Retornamos el resultado de la consulta.
+                    return resultado;
                 }
             }
             catch (Exception)
             {
+                //Si ocurre algún error, retornamos un cero.
                 return 0;
             }
         }
 
+        /// <summary>
+        /// Método que cambia el estatus de un pedido.
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <param name="idPedido"></param>
+        /// <param name="estatus"></param>
+        /// <returns></returns>
         public int SetCambiarEstatusPedido(int idNegocio, int idPedido,int estatus)
         {
             try
             {
+                //Inicializamos la conexión a través de EntityFramework.
                 using (var Conexion = new BDEntities())
                 {
+                    //Realizamos la consulta obteniendo el registro del pedidos.
                     PEDIDOS pedido = Conexion.PEDIDOS.Where(x => x.ID_PEDIDO == idPedido && x.ID_NEGOCIO_ASIGNADO == idNegocio).FirstOrDefault();
                     
+                    //Cambiamos el estatus del registro por el recibido en el parámetro.
                     pedido.ESTATUS = estatus;
 
+                    //Ejecutamos el método para guardar los cambios, el resultado no indica el número de registros afectados.
                     return Conexion.SaveChanges();
                 }
             }
             catch (Exception er)
             {
+                //Si ocurre algún error, retornamos un cero.
                 return 0;
             }
         }

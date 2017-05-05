@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EFModel.ServiceObject
 {
@@ -43,23 +44,26 @@ namespace EFModel.ServiceObject
         /// </summary>
         /// <param name="idPedido"></param>
         /// <returns></returns>
-        public int GetEstatusPedido(int idPedido)
+        public Task<int> GetEstatusPedido(int idPedido)
         {
-            try
-            {
-                using (var Conexion = new BDEntities())
+            return Task.Run(() => {
+                try
                 {
-                    int estatus = (from a in Conexion.PEDIDOS
-                                   where a.ID_PEDIDO == idPedido
-                                   select a.ESTATUS).FirstOrDefault();
-                    return estatus;
-                }
+                    using (var Conexion = new BDEntities())
+                    {
+                        int estatus = (from a in Conexion.PEDIDOS
+                                       where a.ID_PEDIDO == idPedido
+                                       select a.ESTATUS).FirstOrDefault();
+                        return estatus;
+                    }
 
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            });
+            
         }
 
         /// <summary>

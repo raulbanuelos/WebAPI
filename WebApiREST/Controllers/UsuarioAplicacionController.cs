@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using WebApiREST.Models;
 
@@ -30,12 +31,14 @@ namespace WebApiREST.Controllers
         /// <param name="idUsuarioAplicacion"></param>
         /// <returns></returns>
         [Route("api/UsuarioAplicacion/{latitudInicial:double}/{longitudInicial:double}/{latitudDestino:double}/{longitudDestino:double}/{idUsuarioAplicacion:int}")]
-        public IHttpActionResult GetTaxi(double latitudInicial,double longitudInicial,double latitudDestino,double longitudDestino, int idUsuarioAplicacion)
+        public async Task<IHttpActionResult> GetTaxi(double latitudInicial, double longitudInicial, double latitudDestino, double longitudDestino, int idUsuarioAplicacion)
         {
             List<RequestPixie> Lista = new List<RequestPixie>();
 
-            Lista.Add(DataManager.GetAuto(longitudInicial, latitudInicial, longitudDestino, latitudDestino, idUsuarioAplicacion));
+            RequestPixie p = await DataManager.GetAuto(longitudInicial, latitudInicial, longitudDestino, latitudDestino, idUsuarioAplicacion);
             
+            Lista.Add(p);
+
             return Ok(Lista);
         }
 

@@ -7,6 +7,7 @@ using System.Collections;
 using System.Data;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace WebApiREST.Models
 {
@@ -783,7 +784,7 @@ namespace WebApiREST.Models
         /// <param name="latitudDestino"></param>
         /// <param name="idUsuarioAplicacion"></param>
         /// <returns></returns>
-        public static RequestPixie GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)
+        public static async Task<RequestPixie> GetAuto(double longitudInicial, double latitudInicial, double longitudDestino, double latitudDestino, int idUsuarioAplicacion)
         {
             //Declaramos los servicios que utilizaremos en el método.
             SO_Negocio ServicioNegocio = new SO_Negocio();
@@ -896,8 +897,8 @@ namespace WebApiREST.Models
                 //Obtenemos la hora actual.
                 DateTime tiempoInicial = DateTime.Now;
 
-                //Obtenemos la hora actual y le sumamos 10 segundos.
-                DateTime tiempoFinal = tiempoInicial.AddSeconds(60);
+                //Obtenemos la hora actual y le sumamos 120 segundos.
+                DateTime tiempoFinal = tiempoInicial.AddSeconds(120);
 
                 //Ejecutamos el método para asignarle al servicio el negocio iterado.
                 ServicioPedido.SetOperadorServicio(ne.idNegocio, idPedido);
@@ -905,17 +906,17 @@ namespace WebApiREST.Models
                 aceptado = false;
 
                 //Mientras se ejetute el while, sera el tiempo que estará la alerta en la aplicación del operador.
-                //while (tiempoInicial <= tiempoFinal && !aceptado)
-                while (!aceptado)
+                while (tiempoInicial <= tiempoFinal && !aceptado)
+                //while (!aceptado)
                 {
-                    //Esperamos 1 segundo.
-                    RespiroSistema(1);
+                    ////Esperamos 1 segundo.
+                    //RespiroSistema(1);
 
                     //Obtenermos la hora actual.
                     tiempoInicial = DateTime.Now;
 
                     //Obtenemos el id del estatus del servicio
-                    int idEstatus = ServicioPedido.GetEstatusPedido(idPedido);
+                    int idEstatus = await ServicioPedido.GetEstatusPedido(idPedido);
 
                     //Comparamos si el estatus es el #5, el cual representa que el negocio ya aceptó.
                     if (idEstatus == 5)
@@ -969,6 +970,11 @@ namespace WebApiREST.Models
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idNegocio"></param>
+        /// <returns></returns>
         public static double GetPromedioCalificacion(int idNegocio)
         {
             SO_Calificacion ServicioCalificacion = new SO_Calificacion();
@@ -999,35 +1005,35 @@ namespace WebApiREST.Models
             return 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nSecs"></param>
-        public static void RespiroSistema(double nSecs)
-        {
-            // Esperar los segundos indicados
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="nSecs"></param>
+        //public static void RespiroSistema(double nSecs)
+        //{
+        //    // Esperar los segundos indicados
 
-            // Crear la cadena para convertir en TimeSpan
-            string s = "0.00:00:" + nSecs.ToString().Replace(",", ".");
-            TimeSpan ts = TimeSpan.Parse(s);
+        //    // Crear la cadena para convertir en TimeSpan
+        //    string s = "0.00:00:" + nSecs.ToString().Replace(",", ".");
+        //    TimeSpan ts = TimeSpan.Parse(s);
 
-            // Añadirle la diferencia a la hora actual
-            DateTime t1 = DateTime.Now.Add(ts);
+        //    // Añadirle la diferencia a la hora actual
+        //    DateTime t1 = DateTime.Now.Add(ts);
 
-            // Esta asignación solo es necesaria
-            // si la comprobación se hace al principio del bucle
-            DateTime t2 = DateTime.Now;
+        //    // Esta asignación solo es necesaria
+        //    // si la comprobación se hace al principio del bucle
+        //    DateTime t2 = DateTime.Now;
 
-            // Mientras no haya pasado el tiempo indicado
-            while (t2 < t1)
-            {
-                // Un respiro para el sitema
-                System.Windows.Forms.Application.DoEvents();
-                // Asignar la hora actual
-                t2 = DateTime.Now;
-            }
+        //    // Mientras no haya pasado el tiempo indicado
+        //    while (t2 < t1)
+        //    {
+        //        // Un respiro para el sitema
+        //        System.Windows.Forms.Application.DoEvents();
+        //        // Asignar la hora actual
+        //        t2 = DateTime.Now;
+        //    }
 
-        }
+        //}
 
         /// <summary>
         /// 

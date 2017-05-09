@@ -315,13 +315,36 @@ namespace WebApiREST.Models
 
                 if (r2 > 0)
                 {
-                    return new RequestPixie { IsSuccess = true, Code = 1, Data = r2.ToString(), Message = "Aceptaste el servicio" };
+                    IList ListaPedido = ServicioPedido.GetPedido(idPedido);
+
+                    if (ListaPedido != null)
+                    {
+                        Pedido objPedido = new Pedido();
+                        foreach (var item in ListaPedido)
+                        {
+                            System.Type tipo = item.GetType();
+
+                            objPedido = new Pedido();
+
+                            objPedido.idPedido = (int)tipo.GetProperty("ID_PEDIDO").GetValue(item, null);
+                            objPedido.idUsuario = (int)tipo.GetProperty("ID_USUARIO").GetValue(item, null);
+                            objPedido.LatitudDestino = (double)tipo.GetProperty("LATITUD_DESTINO").GetValue(item, null);
+                            objPedido.LatitudIncial = (double)tipo.GetProperty("LATITUD_INICIAL").GetValue(item, null);
+                            objPedido.LongitudDestino = (double)tipo.GetProperty("LONGITUD_DESTINO").GetValue(item, null);
+                            objPedido.LongitudInicial = (double)tipo.GetProperty("LONGITUD_INICIAL").GetValue(item, null);
+                            objPedido.NombreUsuario = (string)tipo.GetProperty("NOMBRE_USUARIO").GetValue(item, null);
+                        }
+                        return new RequestPixie { IsSuccess = true, Code = 1, Data = objPedido, Message = "Aceptaste el servicio" };
+                    }
+                    else
+                    {
+                        return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al actualizar el estado del negocio" };
+                    }
                 }
                 else
                 {
                     return new RequestPixie { IsSuccess = false, Code = 2, Data = null, Message = "Error al actualizar el estado del negocio" };
                 }
-                
             }
             else {
                 return new RequestPixie { IsSuccess = false, Code = 3, Data = null, Message = "Error al aceptar el servicio" };

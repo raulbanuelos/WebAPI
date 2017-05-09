@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -145,7 +146,7 @@ namespace EFModel.ServiceObject
                     return Conexion.SaveChanges();
                 }
             }
-            catch (Exception er)
+            catch (Exception)
             {
                 //Si ocurre algún error, retornamos un cero.
                 return 0;
@@ -205,6 +206,29 @@ namespace EFModel.ServiceObject
             catch (Exception)
             {
                 return 0;
+            }
+        }
+
+        /// <summary>
+        /// Método que retorna la información de un pedido
+        /// </summary>
+        /// <param name="idPedido"></param>
+        /// <returns></returns>
+        public IList GetPedido(int idPedido)
+        {
+            try
+            {
+                using (var Conexion = new BDEntities())
+                {
+                    var Lista = (from a in Conexion.PEDIDOS
+                                 where a.ID_PEDIDO == idPedido
+                                 select a).ToList();
+                    return Lista;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

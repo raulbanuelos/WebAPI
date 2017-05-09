@@ -469,10 +469,10 @@ namespace WebApiREST.Models
             {
                 return new RequestPixie
                 {
-                    IsSuccess = false,
+                    IsSuccess = true,
                     Data = "0",
                     Message = "No tienes servicios asignados",
-                    Code = 3
+                    Code = 2
                 };
             }
         }

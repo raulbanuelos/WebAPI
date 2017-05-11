@@ -1022,7 +1022,7 @@ namespace WebApiREST.Models
                     sumaCalificaciones += item;
                 }
 
-                return sumaCalificaciones / ListaCalificaciones.Count;
+                return Math.Round(sumaCalificaciones / ListaCalificaciones.Count,1);
             }
 
             return 0;

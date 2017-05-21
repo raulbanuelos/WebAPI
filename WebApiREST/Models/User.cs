@@ -31,5 +31,7 @@ namespace WebApiREST.Models
 
         public Negocio Negocio { get; set; }
 
+        public int idPedido { get; set; }
+
     }
 }

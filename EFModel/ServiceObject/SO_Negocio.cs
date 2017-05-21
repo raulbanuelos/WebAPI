@@ -100,7 +100,7 @@ namespace EFModel.ServiceObject
                     var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
                                          join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
                                          join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
-                                         where negocio.IS_ACTIVO == true
+                                         where negocio.IS_ACTIVO == true && negocio.ESTATUS == 1
                                          select new
                                          {
                                              negocio.LATITUD,
@@ -168,7 +168,7 @@ namespace EFModel.ServiceObject
                     var listaNegocios = (from negocio in Conexion.CAT_NEGOCIO
                                          join relacion in Conexion.TBL_RELACIION on negocio.ID_NEGOCIO equals relacion.ID_NEGOCIO
                                          join subcategoria in Conexion.CAT_SUB_CATEGORIA on relacion.ID_SUB_CATEGORIA equals subcategoria.ID_SUB_CATEGORIA
-                                         where subcategoria.NOMBRE.Contains(palabra) && negocio.IS_ACTIVO == true
+                                         where subcategoria.NOMBRE.Contains(palabra) && negocio.IS_ACTIVO == true && negocio.ESTATUS == 1
                                          select new
                                          {
                                              negocio.LATITUD,

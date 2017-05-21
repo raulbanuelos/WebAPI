@@ -61,6 +61,8 @@ namespace WebApiREST.Models
             return lista;
         }
 
+        
+
         /// <summary>
         /// 
         /// </summary>
@@ -69,6 +71,22 @@ namespace WebApiREST.Models
         internal static object GetPedidosUsuario(int idUsuario)
         {
             throw new NotImplementedException();
+        }
+
+        public static  RequestPixie GetEstatusPedidos(int idPedido)
+        {
+            SO_Pedidos ServicioPedidos = new SO_Pedidos();
+
+            int EstatusPedido =  ServicioPedidos.GetEstatusPedido(idPedido);
+
+            if (EstatusPedido != 0)
+            {
+                return new RequestPixie { IsSuccess = true, Code = 1, Data = EstatusPedido, Message = "Ok" };
+            }
+            else {
+                return new RequestPixie { IsSuccess = false, Code = 3, Message = "Ha ocurrido un error", Data = null };
+            }
+
         }
 
         /// <summary>
@@ -939,7 +957,7 @@ namespace WebApiREST.Models
                     tiempoInicial = DateTime.Now;
 
                     //Obtenemos el id del estatus del servicio
-                    int idEstatus = await ServicioPedido.GetEstatusPedido(idPedido);
+                    int idEstatus =  ServicioPedido.GetEstatusPedido(idPedido);
 
                     //Comparamos si el estatus es el #5, el cual representa que el negocio ya aceptó.
                     if (idEstatus == 5)
@@ -977,6 +995,7 @@ namespace WebApiREST.Models
                         usuario.APELLIDO_MATERNO = (string)tipo.GetProperty("APELLIDO_MATERNO").GetValue(item, null);
                         usuario.Negocio = negocioResponde;
                         usuario.IdNegocio = negocioResponde.idNegocio;
+                        usuario.idPedido = idPedido;
 
                     }
                     return new RequestPixie { Code = 1, Data = usuario, Message = "", IsSuccess = true };

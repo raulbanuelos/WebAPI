@@ -8,6 +8,11 @@ namespace EFModel.ServiceObject
 {
     public class SO_Pedidos
     {
+        public SO_Pedidos()
+        {
+
+        }
+
         /// <summary>
         /// Método para generar un pedido.
         /// </summary>
@@ -45,9 +50,9 @@ namespace EFModel.ServiceObject
         /// </summary>
         /// <param name="idPedido"></param>
         /// <returns></returns>
-        public Task<int> GetEstatusPedido(int idPedido)
+        public int GetEstatusPedido(int idPedido)
         {
-            return Task.Run(() => {
+           
                 try
                 {
                     using (var Conexion = new BDEntities())
@@ -63,7 +68,7 @@ namespace EFModel.ServiceObject
                 {
                     return 0;
                 }
-            });
+            
             
         }
 

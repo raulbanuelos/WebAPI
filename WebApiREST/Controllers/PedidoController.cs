@@ -25,6 +25,12 @@ namespace WebApiREST.Controllers
             return Ok(DataManager.CambiarEstatusPedido(idPedido,idNegocio,estatus));
         }
 
+        [AcceptVerbs("GET", "POST")]
+        [Route("api/Pedido/GetEstatusPedido/{idPedido:int}")]
+        public IHttpActionResult GetEstatusPedido(int idPedido)
+        {
+            return Ok(DataManager.GetEstatusPedidos(idPedido));
+        }
         /// <summary>
         /// 
         /// </summary>

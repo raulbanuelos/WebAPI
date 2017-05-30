@@ -1080,6 +1080,9 @@ namespace WebApiREST.Models
                     obj.idUsuarioAplicacion = (int)tipo.GetProperty("ID_USUARIO_APLICACION").GetValue(usuario, null);
                     obj.Correo = (string)tipo.GetProperty("CORREO").GetValue(usuario, null);
                     obj.Contrasena = (string)tipo.GetProperty("CONTRASENA").GetValue(usuario, null);
+                    obj.Nombre = (string)tipo.GetProperty("NOMBRE").GetValue(usuario, null);
+                    obj.ApellidoPaterno = (string)tipo.GetProperty("APELLIDO_PATERNO").GetValue(usuario, null);
+                    obj.ApellidoMaterno = (string)tipo.GetProperty("APELLIDO_MATERNO").GetValue(usuario, null);
                     obj.IsActivo = (bool)tipo.GetProperty("IS_ACTIVO").GetValue(usuario, null);
                     lista.Add(obj);
                 }

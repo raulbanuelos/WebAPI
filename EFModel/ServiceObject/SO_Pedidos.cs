@@ -226,8 +226,17 @@ namespace EFModel.ServiceObject
                 using (var Conexion = new BDEntities())
                 {
                     var Lista = (from a in Conexion.PEDIDOS
+                                 join b in Conexion.CAT_USUARIO_APLICACION on a.ID_USUARIO_APLICACION equals b.ID_USUARIO_APLICACION
                                  where a.ID_PEDIDO == idPedido
-                                 select a).ToList();
+                                 select new {
+                                     ID_PEDIDO = a.ID_PEDIDO,
+                                     ID_USUARIO_APLICACION = b.ID_USUARIO_APLICACION,
+                                     LATITUD_DESTINO = a.LATITUD_DESTINO,
+                                     LATITUD_INICIAL = a.LATITUD_INICIAL,
+                                     LONGITUD_DESTINO = a.LONGITUD_DESTINO,
+                                     LONGITUD_INICIAL = a.LONGITUD_INICIAL,
+                                     NOMBRE_USUARIO = b.NOMBRE + " " + b.APELLIDO_PATERNO + " " + b.APELLIDO_MATERNO
+                                 }).ToList();
                     return Lista;
                 }
             }

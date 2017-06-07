@@ -105,7 +105,7 @@ namespace WebApiREST.Controllers
         /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
         [Route("api/Negocio/VerificarPedidosAsignados/{idNegocio:int}")]
-        public IHttpActionResult GetPermisosAsignados(int idNegocio)
+        public IHttpActionResult GetPedidosAsignados(int idNegocio)
         {
             List<RequestPixie> lista = new List<RequestPixie>();
 
@@ -125,7 +125,9 @@ namespace WebApiREST.Controllers
         public IHttpActionResult SetAceptarPedido(int idNegocio, int idPedido)
         {
             List<RequestPixie> lista = new List<RequestPixie>();
+
             lista.Add(DataManager.SetAceptarServicio(idNegocio, idPedido));
+
             return Ok(lista);
         }
 

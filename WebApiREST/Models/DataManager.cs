@@ -345,7 +345,7 @@ namespace WebApiREST.Models
                             objPedido = new Pedido();
 
                             objPedido.idPedido = (int)tipo.GetProperty("ID_PEDIDO").GetValue(item, null);
-                            objPedido.idUsuario = (int)tipo.GetProperty("ID_USUARIO").GetValue(item, null);
+                            objPedido.idUsuario = (int)tipo.GetProperty("ID_USUARIO_APLICACION").GetValue(item, null);
                             objPedido.LatitudDestino = (double)tipo.GetProperty("LATITUD_DESTINO").GetValue(item, null);
                             objPedido.LatitudIncial = (double)tipo.GetProperty("LATITUD_INICIAL").GetValue(item, null);
                             objPedido.LongitudDestino = (double)tipo.GetProperty("LONGITUD_DESTINO").GetValue(item, null);

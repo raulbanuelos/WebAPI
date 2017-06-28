@@ -1118,15 +1118,20 @@ namespace WebApiREST.Models
         /// <param name="idNegocio"></param>
         /// <param name="estatus"></param>
         /// <returns></returns>
-        public static List<string> CambiarEstatusPedido(int idPedido, int idNegocio, int estatus)
+        public static RequestPixie CambiarEstatusPedido(int idPedido, int idNegocio, int estatus)
         {
             SO_Pedidos ServicioPedido = new SO_Pedidos();
             List<string> listaResultante = new List<string>();
             int r = ServicioPedido.SetCambiarEstatusPedido(idNegocio, idPedido, estatus);
-            string a = r > 0 ? "S" : "N";
-            listaResultante.Add(a);
-            return listaResultante;
 
+            if (r > 0)
+            {
+                return new RequestPixie { Code = 1, Data = r, IsSuccess = true, Message = "Correcto" };
+            }
+            else
+            {
+                return new RequestPixie { Code = 3, Data = r, IsSuccess = false, Message ="Ocurrio un error" };
+            }
         }
 
         /// <summary>
